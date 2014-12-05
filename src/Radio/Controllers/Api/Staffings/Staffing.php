@@ -7,35 +7,35 @@ use Tonic\Response;
 use chobie\Jira\Api;
 
 /**
- * ResourcesPlan api controller.
+ * Staffing api controller.
  *
- * @uri /api/resources_plans/{resourcesPlanKey}
+ * @uri /api/staffings/{staffingKey}
  */
-class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
+class Api_Staffings_Staffing extends Core\Resource
 {
     /**
      * @method GET
      */
-    public function showResourcesPlanInfo($resourcesPlanKey)
+    public function showStaffingInfo($staffingKey)
     {
         /** @var \MongoDB $db */
         $db = $this->app->container['database'];
-        $resourcesPlan = $db->resourcesPlans->findOne(array(
-            '_id' => $resourcesPlanKey
+        $staffing = $db->staffings->findOne(array(
+            '_id' => $staffingKey
         ));
 
-        if ($resourcesPlan) {
-            $this->expandPlan($resourcesPlan);
+        if ($staffing) {
+            $this->expandPlan($staffing);
 
             return new Core\JsonResponse(
                 Response::OK,
-                $resourcesPlan
+                $staffing
             );
         } else {
             return new Core\JsonResponse(
                 Response::NOTFOUND,
                 array(
-                    'message' => 'Resources Plan with id "' . $resourcesPlanKey . '" can\'t be found.'
+                    'message' => 'Staffing with id "' . $staffingKey . '" can\'t be found.'
                 )
             );
         }
@@ -44,24 +44,24 @@ class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
     /**
      * @method PUT
      */
-    public function saveResourcesPlan($resourcesPlanKey)
+    public function saveStaffing($staffingKey)
     {
-        $plan = $this->request->getDecodedData();
+        $staffing = $this->request->getDecodedData();
 
-        if ($plan) {
-            unset($plan['id']);
-            unset($plan['expansion']);
+        if ($staffing) {
+            unset($staffing['id']);
+            unset($staffing['expansion']);
 
             /** @var \MongoDB $db */
             $db = $this->app->container['database'];
-            $db->resourcesPlans->save($plan);
+            $db->staffings->save($staffing);
 
             $response = new Core\JsonResponse(Response::OK, array(
-                'message' => 'Resources Plan has been saved.'
+                'message' => 'Staffing has been saved.'
             ));
         } else {
             $response = new Core\JsonResponse(Response::BADREQUEST, array(
-                'message' => 'Resources Plan data can\'t be found in the request.'
+                'message' => 'Staffing data can\'t be found in the request.'
             ));
         }
 

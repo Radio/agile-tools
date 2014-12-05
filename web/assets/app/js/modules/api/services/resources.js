@@ -18,6 +18,13 @@ angular.module('api')
         return Factory.item('resources_plans/:id', {id: '@id'});
     }])
 
+    .factory('Staffings', ['Factory', function(Factory) {
+        return Factory.collection('staffings');
+    }])
+    .factory('Staffing',  ['Factory', function(Factory) {
+        return Factory.item('staffings/:id', {id: '@id'});
+    }])
+
     .factory('Issues', ['Factory', function(Factory) {
         return Factory.collection('issues');
     }])

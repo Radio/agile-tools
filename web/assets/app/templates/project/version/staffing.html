@@ -1,0 +1,53 @@
+<div class="clearfix">
+    <h2 class="pull-left">Staffing</h2>
+</div>
+
+<div class="staffing-container">
+
+    <div class="legend">
+        <p>Mark 1–5, where:<br>
+            1 — very bad<br>
+            2 — so-so<br>
+            3 — normal<br>
+            4 — good<br>
+            5 — excellent
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 user-points" data-ng-repeat="user in staffing.users">
+            <h3>{{ user.name }}</h3>
+            <form class="form-horizontal" role="form">
+                <div data-ng-repeat="point in points">
+                    <div class="form-group">
+                        <label class="col-sm-9 control-label" for="{{ user.key + '-' + point.key }}"><strong>{{ point.title }}</strong></label>
+                        <div class="col-sm-2" data-ng-if="!point.children">
+                            <input class="form-control input-sm" id="{{ user.key + '-' + point.key }}"
+                                   data-ng-model="user.points[point.key]">
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-if="point.children" data-ng-repeat="childPoint in point.children">
+                        <label class="col-sm-8 col-sm-offset-1 control-label"
+                               for="{{ user.key + '-' + childPoint.key }}">{{ childPoint.title }}</label>
+                        <div class="col-sm-2">
+                            <input class="form-control input-sm" id="{{ user.key + '-' + childPoint.key }}"
+                                   data-ng-model="user.points[point.key][childPoint.key]">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <br>
+                        <textarea class="form-control input-sm" id="{{ user.key + '-comment' }}"
+                               rows="2" placeholder="Comment"
+                               data-ng-model="user.comment"></textarea>
+                    </div>
+                    <div class="col-sm-3">
+                        <br>
+                        <button type="button" class="btn btn-success"
+                                data-ng-click="submitUserFeedback(user)">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
