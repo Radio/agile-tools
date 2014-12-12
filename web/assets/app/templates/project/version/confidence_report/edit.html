@@ -8,6 +8,8 @@
                 <div class="filter-holder"
                      data-confidence-report-filter>
                     <input type="search" class="form-control input-sm" placeholder="Filter issues"
+                           data-ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}"
+                           data-update-model-on-enter
                            data-ng-model="$parent.$parent.searchIssue">
                 </div>
             </div>
@@ -90,7 +92,7 @@
             </div>
         </div>
 
-        <div class="sorting-container"
+        <div class="sorting-container clr-issues"
              data-ng-class="{empty:!sortedIssues.export.length}"
              data-ui-sortable="sortableOptions" data-ng-model="sortedIssues.export">
             <div class="row cl-report-row"
@@ -99,8 +101,9 @@
                  data-ng-include="template">
             </div>
         </div>
+        <div data-ng-controller="Version_ConfidenceReport_Stats_Overview" data-ng-include="template"></div>
         <h4>Watched</h4>
-        <div class="sorting-container"
+        <div class="sorting-container watched-issues"
              data-ng-class="{empty:!sortedIssues.watch.length}"
              data-ui-sortable="sortableOptions" data-ng-model="sortedIssues.watch">
             <div class="row cl-report-row"
@@ -116,5 +119,5 @@
         Issues are being updated. Please wait for a moment.
     </p>
 
-    <div data-ng-controller="Version_ConfidenceReport_Stats_Overview"  data-ng-include="template"></div>
+
 </div>
