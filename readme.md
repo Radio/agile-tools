@@ -1,6 +1,5 @@
 # Agile tools
 
-
 ## Requirements
 
 - php >= 5.3
@@ -16,8 +15,8 @@
 2. Set the DocumentRoot to web folder.
 3. Run ```composer update``` to download all php dependencies.
 4. Run ```bower install``` to download all assets.
-5. Restore db via ???.
-
+5. Check the configuration under 'conf' folder.
+6. Run website.
 
 -- 
 Max
