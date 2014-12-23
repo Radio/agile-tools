@@ -22,7 +22,7 @@ angular.module('agile.controllers')
                 if (issueType) {
                     query.jql += ' AND issuetype = "' + issueType + '"';
                     if (issueType == 'Bug Report') {
-                        query.jql += ' AND status in (Open, "In Progress", Reopened, "Feedback required", "Feedback available")';
+                        query.jql += ' AND status not in ("Closed", "Resolved")';
                     }
                 }
                 if (additionalFilters) {

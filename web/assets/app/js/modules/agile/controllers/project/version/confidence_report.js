@@ -1,6 +1,7 @@
 angular.module('agile.controllers')
-    .controller('Version_ConfidenceReport', ['$rootScope', '$scope', '$location', 'Api', 'Helper', 'JiraHelper', 'Config',
-        function($rootScope, $scope, $location, Api, Helper, JiraHelper, Config) {
+    .controller('Version_ConfidenceReport', [
+        '$rootScope', '$scope', '$location', '$q', 'Api', 'Helper', 'JiraHelper', 'Config',
+        function($rootScope, $scope, $location, $q, Api, Helper, JiraHelper, Config) {
 
             $scope.searchIssue = '';
 
@@ -114,6 +115,7 @@ angular.module('agile.controllers')
 
 
             function updateIssue(issueInfo) {
+                var deferred = $q.defer();
                 Api.get('IssuesImport').post({
                     keys: [issueInfo.key]
                 }).then(function(response) {
@@ -133,12 +135,16 @@ angular.module('agile.controllers')
                             actualizeIssueAssignees($scope.confidenceReport.issues[issueIndex]);
                         }
 
+                        deferred.resolve($scope.confidenceReport.issues[issueIndex]);
+
                         $scope.saveConfidenceReport().then(function() {
                             $scope.$broadcast('confidenceReportChanged');
                             Helper.setAlert('success', 'Issue has been updated.');
                         });
-                    });
-                });
+                    }, function() { deferred.reject(); });
+                }, function() { deferred.reject(); });
+
+                return deferred.promise;
             }
 
             function removeIssue(issueInfo) {
