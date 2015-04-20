@@ -34,8 +34,22 @@ angular.module('api')
     .factory('Projects', ['Factory', function(Factory) {
         return Factory.collection('projects');
     }])
-    .factory('Project',  ['Factory', function(Factory) {
-        return Factory.item('projects/:id', {id: '@id'});
+    .factory('Project',  ['Factory', 'Date', function(Factory, Date) {
+        var projectApi = Factory.item('projects/:id', {id: '@id'});
+
+        var parentGet = projectApi.get;
+        projectApi.get = function(query) {
+            return parentGet(query).then(function(project) {
+                if (project.versions) {
+                    project.versions.forEach(function(version) {
+                        Date.dateStringToObject(version, ['startDate', 'releaseDate']);
+                    });
+                }
+                return project;
+            });
+        };
+
+        return projectApi;
     }])
     .factory('ProjectsImport',  ['Factory', function(Factory) {
         return Factory.collection('projects/import');

@@ -29,7 +29,8 @@
     "angular-route-segment": "latest",
     "chartjs": "latest",
     "js-yaml": "latest",
-    "angular-ui-sortable": "latest"
+    "angular-ui-sortable": "latest",
+    "momentjs-business": "https://github.com/leonardosantos/momentjs-business.git"
   },
   "resolutions": {
     "angular": "latest"

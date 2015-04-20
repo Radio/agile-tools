@@ -57,11 +57,11 @@ class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
             $db->resourcesPlans->save($plan);
 
             $response = new Core\JsonResponse(Response::OK, array(
-                'message' => 'Confidence Report has been saved.'
+                'message' => 'Resources Plan has been saved.'
             ));
         } else {
             $response = new Core\JsonResponse(Response::BADREQUEST, array(
-                'message' => 'Confidence Report data can\'t be found in the request.'
+                'message' => 'Resources Plan data can\'t be found in the request.'
             ));
         }
 

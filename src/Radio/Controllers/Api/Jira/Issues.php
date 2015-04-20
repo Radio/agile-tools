@@ -25,17 +25,16 @@ class Api_Jira_Issues extends Core\Resource
         $jiraApi = $this->app->container['jira.api'];
 
         try {
-            $result = $this->applyFilters($jiraApi);
+            $result = $this->applyFilters($jiraApi)->getResult();
 
-            return new Core\JsonResponse(
-                Response::OK,
-                $result->getResult()['issues']
-            );
+            if (!isset($result['issues'])) {
+                $message = isset($result['errorMessages']) ? implode("\n", $result['errorMessages']) : '';
+                throw new Exceptions\Api($message, Response::INTERNALSERVERERROR);
+            }
+
+            return new Core\JsonResponse(Response::OK, $result['issues'] );
         } catch(Exceptions\Api $e) {
-            return new Core\JsonResponse(
-                Response::BADREQUEST,
-                $e->getResponseData()
-            );
+            return new Core\JsonResponse(Response::BADREQUEST, $e->getResponseData());
         }
     }
 
