@@ -3,16 +3,29 @@
         <div class="cell col-sm-6">
             <div class="row">
                 <div class="col-sm-2 cell-key">
-                    <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ issueInfo.key }}"
+                    <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ issueInfo.key }}" title="Open in Jira"
                        target="_blank">{{ issueInfo.key }}</a>
-                    <span class="loading-indicator" title="Please wait..."
-                          data-ng-show="issueIsUpdating"></span>
-                    <span class="issue-action a glyphicon glyphicon-repeat" title="Update issue"
-                          data-ng-click="updateIssue()"
-                          data-ng-hide="issueIsUpdating"></span>
-                    <span class="issue-action a glyphicon glyphicon-remove text-danger" title="Remove issue"
-                          data-ng-click="removeIssue()"
-                          data-ng-hide="issueIsUpdating"></span>
+                    <div class="issue-actions-box">
+                        <span class="small-key">
+                            <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ issueInfo.key }}"
+                               title="Open in Jira"
+                               target="_blank">{{ getSmallKey(issueInfo.key) }}</a>
+                        </span>
+                        <div class="issue-actions">
+                            <span class="loading-indicator" title="Please wait..."
+                                  data-ng-show="issueIsUpdating"></span>
+                            <span class="issue-action clickable glyphicon glyphicon-repeat" title="Update issue"
+                                  data-ng-click="updateIssue()"
+                                  data-ng-hide="issueIsUpdating"></span>
+                            <span class="issue-action clickable glyphicon glyphicon-compressed text-warning" title="Archive issue"
+                                  data-ng-if="!issueInfo.archived"
+                                  data-ng-click="archiveIssue()"
+                                  data-ng-hide="issueIsUpdating"></span>
+                            <span class="issue-action clickable glyphicon glyphicon-remove text-danger" title="Remove issue"
+                                  data-ng-click="removeIssue()"
+                                  data-ng-hide="issueIsUpdating"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-7 cell-summary">
                     <span class="expand-btn clickable" data-ng-click="showDetails = true"

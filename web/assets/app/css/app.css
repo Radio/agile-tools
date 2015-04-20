@@ -160,9 +160,42 @@ label {
 .cl-report-row:hover {
   background: #e8e8e8;
 }
-.cl-report-row:hover .issue-time,
-.cl-report-row:hover .issue-action {
+.cl-report-row:hover .issue-time {
   display: inline;
+}
+.cl-report-row:hover .cell-key .issue-actions-box {
+  display: block;
+}
+.cl-report-row .cell-key {
+  position: relative;
+}
+.cl-report-row .cell-key .issue-actions-box {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  padding-left: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.cl-report-row .cell-key .issue-actions-box .issue-actions {
+  background-color: #e8e8e8;
+  padding: 0 15px;
+  width: 100%;
+}
+.cl-report-row .cell-key .issue-actions-box .small-key {
+  position: absolute;
+  left: -10px;
+  top: 2px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  writing-mode: bt-rl;
+  font-size: 0.8em;
+}
+.cl-report-row .cell-key .issue-action {
+  margin: 0 5px;
+  z-index: 100;
 }
 .cl-report-row.drag-enter {
   border-top: 1px solid #ccc;
@@ -332,18 +365,6 @@ label {
 }
 .export-table .cell-note {
   min-width: 150px;
-}
-.issue-action {
-  display: none;
-  position: relative;
-  z-index: 100;
-}
-.issue-action.glyphicon-repeat {
-  left: 5px;
-}
-.issue-action.glyphicon-remove {
-  color: #a94442;
-  left: 10px;
 }
 .options label {
   margin-left: 20px;

@@ -7,7 +7,7 @@ angular.module('agile.controllers')
 
             $scope.updateIssue = function() {
                 $scope.issueIsUpdating = true;
-                $scope.$parent.updateIssue($scope.issueInfo).then(function() {
+                $scope.updateIssue($scope.issueInfo).then(function() {
                     $scope.issueIsUpdating = false;
                 }, function() {
                     $scope.issueIsUpdating = false;
@@ -15,7 +15,13 @@ angular.module('agile.controllers')
             };
 
             $scope.removeIssue = function() {
-                $scope.$parent.removeIssue($scope.issueInfo);
+                $scope.removeIssue($scope.issueInfo);
+            };
+
+            $scope.archiveIssue = function() {
+                $scope.issueInfo.archived = true;
+                $scope.saveConfidenceReport();
+                $scope.$emit('confidenceReportChanged');
             };
 
             $scope.getRowClass = function() {
@@ -27,6 +33,11 @@ angular.module('agile.controllers')
                     'updating': $scope.issueIsUpdating,
                     'wrong-version': !checkIssueVersion()
                 };
+            };
+
+            $scope.getSmallKey = function(key)
+            {
+                return key.replace(/^.+?-/, '');
             };
 
             function checkIssueVersion()

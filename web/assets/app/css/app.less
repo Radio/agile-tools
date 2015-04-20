@@ -178,12 +178,49 @@ label {
         font-size: 13px;
     }
 
+    @hoverColor: #e8e8e8;
     &:hover {
-        background: #e8e8e8;
+        background: @hoverColor;
 
-        .issue-time,
-        .issue-action {
+        .issue-time{
             display: inline;
+        }
+        .cell-key {
+            .issue-actions-box {
+                display: block;
+            }
+        }
+    }
+    .cell-key {
+        position: relative;
+        .issue-actions-box {
+            position: absolute;
+            left: -10px;
+            top: 0;
+            padding-left: 20px;
+            width: 100%;
+            height: 100%;
+            display: none;
+            .issue-actions {
+                background-color: @hoverColor;
+                padding: 0 15px;
+                width: 100%;
+            }
+            .small-key {
+                position: absolute;
+                left: -10px;
+                top: 2px;
+                -webkit-transform: rotate(270deg);
+                -moz-transform: rotate(270deg);
+                -o-transform: rotate(270deg);
+                writing-mode: bt-rl;
+                font-size: 0.8em;
+
+            }
+        }
+        .issue-action {
+            margin: 0 5px;
+            z-index: 100;
         }
     }
 
@@ -212,6 +249,7 @@ label {
     .wrong-version {
         background-color: rgba(255, 47, 49, 0.15);
     }
+
     .cell-progress {
         padding: 0 5px;
         input {
@@ -378,19 +416,6 @@ label {
     }
     .cell-note {
         min-width: 150px;
-    }
-}
-.issue-action {
-    display: none;
-    position: relative;
-    z-index: 100;
-
-    &.glyphicon-repeat {
-        left: 5px;
-    }
-    &.glyphicon-remove {
-        color: #a94442;
-        left: 10px;
     }
 }
 .options {
