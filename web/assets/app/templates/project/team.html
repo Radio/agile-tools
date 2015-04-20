@@ -1,0 +1,66 @@
+<div class="page-header">
+    <h1><a href="/project/{{ project.key }}">{{ ::project.name }}</a> / Team</h1>
+    <div data-ng-show="alert.message" role="alert"
+         class="alert alert-{{alert.type}}">{{alert.message}}</div>
+</div>
+
+<div class="row filter-row">
+    <div class="col-sm-1">
+        <div class="pull-left filter-holder">
+            <button type="button" class="btn btn-sm btn-primary"
+                data-ng-click="saveProject()">Save</button>
+        </div>
+    </div>
+    <div class="col-sm-11">
+        <strong>Total:</strong> {{ totalByIsActive(true) }}
+        <span data-ng-show="totalByIsActive(false)">({{ totalByIsActive(false) }} inactive)</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>BE:</strong> {{ totalByType('BE') }}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>FE:</strong> {{ totalByType('FE') }}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>QA:</strong> {{ totalByType('QA') }}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span data-ng-show="totalByType(null)"><strong>—:</strong> {{ totalByType(null) }}</span>
+    </div>
+</div>
+
+<div class="project-team-container">
+    <div class="row project-team-header grid-header">
+        <div class="col-md-2"><strong>Name</strong></div>
+        <div class="col-md-2"><strong>Role</strong></div>
+        <div class="col-md-2"><strong>Dev (QA) Assignment</strong></div>
+        <div class="col-md-2"><strong>Ratio</strong></div>
+        <div class="col-md-2"><strong>Is active</strong></div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row project-team-row" data-ng-repeat="user in project.users">
+        <div class="col-md-2 cell-name">
+            <a href="/performance/{{ user.key }}">{{ user.name }}</a>
+        </div>
+        <div class="col-md-2 cell-type">
+            <select data-ng-model="user.type"
+                    data-ng-options="userType.key as userType.name for userType in userTypes">
+                <option value="">&mdash;</option>
+            </select>
+        </div>
+        <div class="col-md-2 cell-assignment">
+            <input type="number" class="form-control input-sm" data-ng-model="user.assignment"/>
+        </div>
+        <div class="col-md-2 cell-ratio">
+            <input type="number" class="form-control input-sm" data-ng-model="user.ratio"/>
+        </div>
+        <div class="col-md-2 cell-is_active">
+            <input type="checkbox" class="checkbox" data-ng-model="user.is_active"/>
+        </div>
+        <div class="col-md-2 cell-remove">
+            <a href="" data-ng-click="removeUser(user)" title="Remove from team">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+    <div class="users-import-container">
+         <!--<div data-ng-controller="Project_Users_Import" data-ng-include="template"></div>-->
+        <div data-user-import data-callback="addUserCallback"></div>
+    </div>
+</div>
