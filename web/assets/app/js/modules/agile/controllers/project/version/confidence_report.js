@@ -263,14 +263,21 @@ angular.module('agile.controllers')
             {
                 $scope.sortedIssues = {
                     export: [],
-                    watch: []
+                    watch: [],
+                    archive: []
                 };
                 for (var i = 0; i < $scope.confidenceReport.issues.length; i++) {
-                    if ($scope.confidenceReport.issues[i].export) {
-                        $scope.sortedIssues.export.push($scope.confidenceReport.issues[i]);
+                    var issue = $scope.confidenceReport.issues[i];
+                    if (issue.archived) {
+                        $scope.sortedIssues.archive.push(issue);
                     } else {
-                        $scope.confidenceReport.issues[i].export = false;
-                        $scope.sortedIssues.watch.push($scope.confidenceReport.issues[i]);
+                        issue.archived = false;
+                        if (issue.export) {
+                            $scope.sortedIssues.export.push(issue);
+                        } else {
+                            issue.export = false;
+                            $scope.sortedIssues.watch.push(issue);
+                        }
                     }
                 }
             }
@@ -307,11 +314,17 @@ angular.module('agile.controllers')
                 var i, issues = [];
                 for (i = 0; i < $scope.sortedIssues.export.length; i++) {
                     $scope.sortedIssues.export[i].export = true;
+                    $scope.sortedIssues.export[i].archived = false;
                     issues.push($scope.sortedIssues.export[i]);
                 }
                 for (i = 0; i < $scope.sortedIssues.watch.length; i++) {
                     $scope.sortedIssues.watch[i].export = false;
+                    $scope.sortedIssues.watch[i].archived = false;
                     issues.push($scope.sortedIssues.watch[i]);
+                }
+                for (i = 0; i < $scope.sortedIssues.archive.length; i++) {
+                    $scope.sortedIssues.archive[i].archived = true;
+                    issues.push($scope.sortedIssues.archive[i]);
                 }
                 $scope.confidenceReport.issues = issues;
             }

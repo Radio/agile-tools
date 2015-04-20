@@ -44,7 +44,7 @@ angular.module('agile.controllers')
                 });
                 jiraIssuesApi.enableCache();
             };
-            $scope.hideImport = function()
+            $scope.hideImportForm = function()
             {
                 $scope.showImport = false;
                 $scope.showImportLoader = false;
@@ -85,13 +85,13 @@ angular.module('agile.controllers')
 
                                     $scope.$emit('confidenceReportChanged');
 
-                                    $scope.hideImport();
+                                    $scope.hideImportForm();
                                     Helper.setAlert('success', 'Issues state has been updated.');
                                 });
                             });
                         });
                     } else {
-                        $scope.hideImport();
+                        $scope.hideImportForm();
                     }
                 }
             };
