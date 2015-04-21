@@ -80,22 +80,8 @@ angular.module('agile.controllers')
                 $scope.plan.qaDays = planCalc.getQaDays();
                 userCalc.recalculateAll()
             });
-            $scope.startDate = function(startDate) {
-                if (angular.isDefined(startDate)) {
-                    var d = startDate.split('.');
-                    return $scope.plan.startDate = new Date(d[2], d[1] - 1, d[0]);
-                } else {
-                    return dateFormatFilter($scope.plan.startDate, 'DD.MM.YYYY');
-                }
-            };
-            $scope.releaseDate = function(releaseDate) {
-                if (angular.isDefined(releaseDate)) {
-                    var d = releaseDate.split('.');
-                    return $scope.plan.releaseDate = new Date(d[2], d[1] - 1, d[0]);
-                } else {
-                    return dateFormatFilter($scope.plan.releaseDate, 'DD.MM.YYYY');
-                }
-            };
+            $scope.startDate = dateGetterSetterFactory('startDate');
+            $scope.releaseDate = dateGetterSetterFactory('releaseDate');
 
             $scope.save = saveResourcePlan;
             $scope.export = exportResourcePlan;
@@ -261,5 +247,16 @@ angular.module('agile.controllers')
                 };
                 console.info('Loading issues with query: ' + request.jql);
                 return Api.get('JiraIssues').get(request);
+            }
+            function dateGetterSetterFactory(property)
+            {
+                return function(dateString) {
+                    if (angular.isDefined(dateString)) {
+                        var d = dateString.split('.');
+                        return $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
+                    } else {
+                        return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
+                    }
+                };
             }
         }]);

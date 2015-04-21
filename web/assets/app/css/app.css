@@ -53,6 +53,9 @@ label {
   padding: 10px 15px;
   border-radius: 0;
 }
+.text-secondary {
+  color: #ccc;
+}
 .page-header {
   position: relative;
 }
@@ -180,7 +183,6 @@ label {
 }
 .cl-report-row .cell-key .issue-actions-box .issue-actions {
   background-color: #e8e8e8;
-  padding: 0 15px;
   width: 100%;
 }
 .cl-report-row .cell-key .issue-actions-box .small-key {
@@ -563,4 +565,46 @@ label {
 }
 .resources-container .total-row td {
   border-top: 1px solid #ccc;
+}
+.resources-container.resources-export h4 {
+  margin-top: 30px;
+}
+.commitment-container div.checkbox {
+  margin-top: 0;
+}
+.commitment-container .commitment-grid-row {
+  padding: 5px 0 0;
+}
+.commitment-container .missing {
+  background-color: #ffd1cf;
+}
+.commitment-container .new {
+  background-color: #fff7bf;
+}
+.commitment-container .cell-story-key em {
+  cursor: move;
+}
+.commitment-container.commitment-export .export-table {
+  width: 800px;
+}
+.commitment-container.commitment-export .export-table td {
+  border: 1px solid #888;
+}
+.commitment-container .iteration-plan-header-grid {
+  width: 400px;
+}
+.commitment-container .iteration-plan-header-grid td {
+  border: 1px solid #888;
+  padding: 5px 10px;
+}
+.commitment-container .settings-form {
+  margin: 15px 0 30px;
+}
+.commitment-container .settings-form .form-group {
+  margin-right: 20px;
+}
+.commitment-container .settings-form label {
+  font-weight: bold;
+  width: 150px;
+  text-align: right;
 }

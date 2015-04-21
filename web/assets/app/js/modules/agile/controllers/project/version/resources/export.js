@@ -1,6 +1,6 @@
 angular.module('agile.controllers')
-    .controller('Version_Resources_Export', ['$scope', '$location', 'filterFilter', 'Helper',
-        function($scope, $location, filterFilter, Helper) {
+    .controller('Version_Resources_Export', ['$scope', '$location',
+        function($scope, $location) {
 
             $scope.hideAdditionalInfo = true;
 

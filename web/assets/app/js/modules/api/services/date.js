@@ -1,5 +1,5 @@
 angular.module('api')
-    .factory('Date', function() {
+    .factory('DateConverter', function() {
         return {
             dateStringToObject: function(item, properties) {
                 properties.forEach(function(property) {

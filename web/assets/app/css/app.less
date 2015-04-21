@@ -54,6 +54,9 @@ label {
     padding: 10px 15px;
     border-radius: 0;
 }
+.text-secondary {
+    color: #ccc;
+}
 .page-header {
     position: relative;
 
@@ -203,7 +206,7 @@ label {
             display: none;
             .issue-actions {
                 background-color: @hoverColor;
-                padding: 0 15px;
+//                padding: 0 15px;
                 width: 100%;
             }
             .small-key {
@@ -657,6 +660,67 @@ label {
         }
         td {
             border-top: 1px solid #ccc;
+        }
+    }
+    &.resources-export {
+        h4 {
+            margin-top: 30px;
+        }
+    }
+}
+.commitment-container {
+    div.checkbox {
+        margin-top: 0;
+    }
+    .commitment-grid-row {
+//        -webkit-transition: all linear 0.3s;
+//        transition: all linear 0.3s;
+        padding: 5px 0 0;
+    }
+    .missing {
+        background-color: #ffd1cf;
+    }
+    .new {
+        background-color: #fff7bf;
+    }
+    .cell-story-key {
+        em {
+            cursor: move;
+        }
+    }
+    &.commitment-export {
+        .export-table {
+            width: 800px;
+            td {
+                border: 1px solid #888;
+            }
+        }
+    }
+    .iteration-plan-header-grid {
+        width: 400px;
+        td {
+            border: 1px solid #888;
+            padding: 5px 10px;
+        }
+    }
+    .settings-form {
+        margin: 15px 0 30px;
+
+        .form-group {
+            margin-right: 20px;
+        }
+        label {
+            font-weight: bold;
+            width: 150px;
+            text-align: right;
+        }
+        .date-input {
+//            width: 75px;
+//            padding-left: 5px;
+//            padding-right: 5px;
+        }
+        #iteration {
+//            width: 40px;
         }
     }
 }

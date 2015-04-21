@@ -4,7 +4,7 @@
             <img data-ng-src="{{ project.avatar_urls['48x48'] }}">
         </div>
         <div class="media-body">
-            <h1>{{ project.name }}</h1>
+            <h1>{{ config.value('project_name') || project.name }}</h1>
             <p>
                 &nbsp;Project Key: <strong>{{ project.key }}</strong>
                 | <a href="/config/{{ project.key }}">Edit Configuration</a>

@@ -7,7 +7,7 @@ angular.module('agile.controllers')
 
             $scope.updateIssue = function() {
                 $scope.issueIsUpdating = true;
-                $scope.updateIssue($scope.issueInfo).then(function() {
+                $scope.$parent.updateIssue($scope.issueInfo).then(function() {
                     $scope.issueIsUpdating = false;
                 }, function() {
                     $scope.issueIsUpdating = false;
@@ -15,7 +15,7 @@ angular.module('agile.controllers')
             };
 
             $scope.removeIssue = function() {
-                $scope.removeIssue($scope.issueInfo);
+                $scope.$parent.removeIssue($scope.issueInfo);
             };
 
             $scope.archiveIssue = function() {

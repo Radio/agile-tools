@@ -1,13 +1,15 @@
 <p><span class="a" data-ng-click="hideExportPage()">&larr; Back</span></p>
-<div class="resources-container">
+<div class="resources-container resources-export">
     <div class="checkbox">
         <label><input type="checkbox" data-ng-model="hideAdditionalInfo"> Hide additional info</label>
     </div>
 
     <hr>
+    <br>
+    <h3>Capacity Calculation</h3>
     <div data-ng-repeat="userType in userTypes">
         <h4>{{ userType.name }}</h4>
-        <table class="resources-grid resources-export export-table">
+        <table class="resources-grid export-table">
             <tr class="export-header">
                 <td width="200"></td>
                 <td>Available (h)</td>
@@ -43,14 +45,9 @@
             </tr>
         </table>
     </div>
-    <div class="row comments-row">
-        <div class="col-sm-8">
-            <div class="form-group">
-                <h4>Comments</h4>
-                {{ plan.comments | newlines }}
-                <span data-ng-hide="plan.comments">—</span>
-            </div>
-        </div>
-    </div>
+    <h4>Comments</h4>
+    {{ plan.comments | newlines }}
+    <span data-ng-hide="plan.comments">—</span>
+    <br>
     <hr>
 </div>

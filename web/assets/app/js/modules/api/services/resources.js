@@ -1,40 +1,67 @@
 angular.module('api')
 
-    .factory('ConfigsApi',  ['Factory', function(Factory) {
+    .factory('ConfigsApi',  function(Factory) {
         return Factory.collection('configs', {id: '@id'});
-    }])
-    .factory('ConfigApi',  ['Factory', function(Factory) {
+    })
+    .factory('ConfigApi',  function(Factory) {
         return Factory.item('configs/:id', {id: '@id'});
-    }])
+    })
 
-    .factory('ConfidenceReports', ['Factory', function(Factory) {
+    .factory('ConfidenceReports', function(Factory) {
         return Factory.collection('confidence_reports');
-    }])
-    .factory('ConfidenceReport',  ['Factory', function(Factory) {
+    })
+    .factory('ConfidenceReport',  function(Factory) {
         return Factory.item('confidence_reports/:id', {id: '@id'});
-    }])
+    })
 
-    .factory('ResourcesPlans', ['Factory', function(Factory) {
+    .factory('ResourcesPlans', function(Factory) {
         return Factory.collection('resources_plans');
-    }])
-    .factory('ResourcesPlan',  ['Factory', function(Factory) {
-        return Factory.item('resources_plans/:id', {id: '@id'});
-    }])
+    })
+    .factory('ResourcesPlan',  function(Factory, DateConverter) {
+        var api = Factory.item('resources_plans/:id', {id: '@id'});
 
-    .factory('Issues', ['Factory', function(Factory) {
+        var parentGet = api.get;
+        api.get = function(query) {
+            return parentGet(query).then(function(plan) {
+                DateConverter.dateStringToObject(plan, ['startDate', 'releaseDate']);
+                return plan;
+            });
+        };
+
+        return api;
+    })
+
+    .factory('Commitments', function(Factory) {
+        return Factory.collection('commitments');
+    })
+    .factory('Commitment', function(Factory, DateConverter) {
+        var api = Factory.item('commitments/:id', {id: '@id'});
+
+        var parentGet = api.get;
+        api.get = function(query) {
+            return parentGet(query).then(function(plan) {
+                DateConverter.dateStringToObject(plan, ['startDate', 'releaseDate', 'freezeDate', 'approveTill']);
+                return plan;
+            });
+        };
+
+        return api;
+    })
+
+    .factory('Issues', function(Factory) {
         return Factory.collection('issues');
-    }])
-    .factory('Issue',  ['Factory', function(Factory) {
+    })
+    .factory('Issue',  function(Factory) {
         return Factory.item('issues/:id', {id: '@id'});
-    }])
-    .factory('IssuesImport',  ['Factory', function(Factory) {
+    })
+    .factory('IssuesImport',  function(Factory) {
         return Factory.collection('issues/import');
-    }])
+    })
 
-    .factory('Projects', ['Factory', function(Factory) {
+    .factory('Projects', function(Factory) {
         return Factory.collection('projects');
-    }])
-    .factory('Project',  ['Factory', 'Date', function(Factory, Date) {
+    })
+    .factory('Project', function(Factory, DateConverter) {
         var projectApi = Factory.item('projects/:id', {id: '@id'});
 
         var parentGet = projectApi.get;
@@ -42,7 +69,7 @@ angular.module('api')
             return parentGet(query).then(function(project) {
                 if (project.versions) {
                     project.versions.forEach(function(version) {
-                        Date.dateStringToObject(version, ['startDate', 'releaseDate']);
+                        DateConverter.dateStringToObject(version, ['startDate', 'releaseDate']);
                     });
                 }
                 return project;
@@ -50,42 +77,42 @@ angular.module('api')
         };
 
         return projectApi;
-    }])
-    .factory('ProjectsImport',  ['Factory', function(Factory) {
+    })
+    .factory('ProjectsImport',  function(Factory) {
         return Factory.collection('projects/import');
-    }])
+    })
 
-    .factory('Users', ['Factory', function(Factory) {
+    .factory('Users', function(Factory) {
         return Factory.collection('users');
-    }])
-    .factory('User',  ['Factory', function(Factory) {
+    })
+    .factory('User',  function(Factory) {
         return Factory.item('users/:id', {id: '@id'});
-    }])
-    .factory('UsersImport',  ['Factory', function(Factory) {
+    })
+    .factory('UsersImport',  function(Factory) {
         return Factory.collection('users/import');
-    }])
+    })
 
-    .factory('JiraIssueTypes', ['Factory', function(Factory) {
+    .factory('JiraIssueTypes', function(Factory) {
         return Factory.collection('jira/issue_types');
-    }])
-    .factory('JiraIssues', ['Factory', function(Factory) {
+    })
+    .factory('JiraIssues', function(Factory) {
         return Factory.collection('jira/issues');
-    }])
-    .factory('JiraIssue',  ['Factory', function(Factory) {
+    })
+    .factory('JiraIssue',  function(Factory) {
         return Factory.item('jira/issues/:id', {id: '@id'});
-    }])
+    })
 
-    .factory('JiraProjects', ['Factory', function(Factory) {
+    .factory('JiraProjects', function(Factory) {
         return Factory.collection('jira/projects');
-    }])
-    .factory('JiraProject',  ['Factory', function(Factory) {
+    })
+    .factory('JiraProject',  function(Factory) {
         return Factory.item('jira/projects/:id', {id: '@id'});
-    }])
+    })
 
-    .factory('JiraUsers', ['Factory', function(Factory) {
+    .factory('JiraUsers', function(Factory) {
         return Factory.collection('jira/users');
-    }])
-    .factory('JiraUser',  ['Factory', function(Factory) {
+    })
+    .factory('JiraUser',  function(Factory) {
         return Factory.item('jira/users/:id', {id: '@id'});
-    }])
+    })
 ;

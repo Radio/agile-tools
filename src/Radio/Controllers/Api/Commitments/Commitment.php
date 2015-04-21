@@ -7,30 +7,30 @@ use Tonic\Response;
 use chobie\Jira\Api;
 
 /**
- * ResourcesPlan api controller.
+ * Commitment api controller.
  *
- * @uri /api/resources_plans/{resourcesPlanKey}
+ * @uri /api/commitments/{commitmentKey}
  */
-class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
+class Api_Commitments_Commitment extends Core\Resource
 {
     /**
      * @method GET
      */
-    public function showResourcesPlanInfo($resourcesPlanKey)
+    public function showCommitmentInfo($commitmentKey)
     {
         /** @var \MongoDB $db */
         $db = $this->app->container['database'];
-        $resourcesPlan = $db->resourcesPlans->findOne(array(
-            '_id' => $resourcesPlanKey
+        $commitment = $db->commitments->findOne(array(
+            '_id' => $commitmentKey
         ));
 
-        if ($resourcesPlan) {
-            return new Core\JsonResponse(Response::OK, $resourcesPlan);
+        if ($commitment) {
+            return new Core\JsonResponse(Response::OK, $commitment);
         } else {
             return new Core\JsonResponse(
                 Response::NOTFOUND,
                 array(
-                    'message' => 'Resources Plan with id "' . $resourcesPlanKey . '" can\'t be found.'
+                    'message' => 'Commitment Plan with id "' . $commitmentKey . '" can\'t be found.'
                 )
             );
         }
@@ -39,7 +39,7 @@ class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
     /**
      * @method PUT
      */
-    public function saveResourcesPlan($resourcesPlanKey)
+    public function saveCommitment($commitmentKey)
     {
         $plan = $this->request->getDecodedData();
 
@@ -49,14 +49,14 @@ class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
 
             /** @var \MongoDB $db */
             $db = $this->app->container['database'];
-            $db->resourcesPlans->save($plan);
+            $db->commitments->save($plan);
 
             $response = new Core\JsonResponse(Response::OK, array(
-                'message' => 'Resources Plan has been saved.'
+                'message' => 'Commitment Plan has been saved.'
             ));
         } else {
             $response = new Core\JsonResponse(Response::BADREQUEST, array(
-                'message' => 'Resources Plan data can\'t be found in the request.'
+                'message' => 'Commitment Plan data can\'t be found in the request.'
             ));
         }
 
