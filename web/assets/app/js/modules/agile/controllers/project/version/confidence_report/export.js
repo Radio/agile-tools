@@ -6,7 +6,7 @@ angular.module('agile.controllers')
 
             $scope.hideExportPage = function() {
                 $location.path('/project/' + $scope.project.key
-                    + '/' + $scope.version.name + '/confidence_report');
+                    + '/version/' + $scope.version.name + '/confidence_report');
             };
 
             $scope.$watch('confidenceReport', function () {

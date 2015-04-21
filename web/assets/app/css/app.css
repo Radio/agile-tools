@@ -53,6 +53,9 @@ label {
   padding: 10px 15px;
   border-radius: 0;
 }
+.text-secondary {
+  color: #ccc;
+}
 .page-header {
   position: relative;
 }
@@ -116,7 +119,13 @@ label {
   padding: 2px 40px;
   margin: 0;
 }
-.cl-report-header {
+.filter-row .separator {
+  color: #ccc;
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.grid-header {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-bottom: 5px;
@@ -138,6 +147,14 @@ label {
 .cl-report {
   margin-bottom: 30px;
 }
+.cl-report h4 {
+  margin-left: -15px;
+  margin-top: 30px;
+}
+.cl-report h4 small {
+  position: relative;
+  top: -3px;
+}
 @media (max-width: 1400px) {
   .cl-report-row {
     font-size: 13px;
@@ -146,9 +163,41 @@ label {
 .cl-report-row:hover {
   background: #e8e8e8;
 }
-.cl-report-row:hover .issue-time,
-.cl-report-row:hover .issue-action {
+.cl-report-row:hover .issue-time {
   display: inline;
+}
+.cl-report-row:hover .cell-key .issue-actions-box {
+  display: block;
+}
+.cl-report-row .cell-key {
+  position: relative;
+}
+.cl-report-row .cell-key .issue-actions-box {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  padding-left: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.cl-report-row .cell-key .issue-actions-box .issue-actions {
+  background-color: #e8e8e8;
+  width: 100%;
+}
+.cl-report-row .cell-key .issue-actions-box .small-key {
+  position: absolute;
+  left: -10px;
+  top: 2px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  writing-mode: bt-rl;
+  font-size: 0.8em;
+}
+.cl-report-row .cell-key .issue-action {
+  margin: 0 5px;
+  z-index: 100;
 }
 .cl-report-row.drag-enter {
   border-top: 1px solid #ccc;
@@ -289,45 +338,35 @@ label {
 .clr-import {
   margin-bottom: 20px;
 }
-.cl-report-export {
+.export-table {
   border-collapse: collapse;
 }
-.cl-report-export .cl-report-header {
+.export-table .export-header {
   background-color: #c3d9ff;
 }
-.cl-report-export .cl-report-row.good {
+.export-table .cl-report-row.good {
   background-color: #cfe6c4;
 }
-.cl-report-export .cl-report-row.so-so {
+.export-table .cl-report-row.so-so {
   background-color: #fff7bf;
 }
-.cl-report-export .cl-report-row.bad {
+.export-table .cl-report-row.bad {
   background-color: #ffd1cf;
 }
-.cl-report-export .cl-report-row .cell-status {
+.export-table .cl-report-row .cell-status {
   color: #333;
 }
-.cl-report-export td {
-  padding: 5px 10px;
+.export-table .cl-report-row td {
   border-bottom: 1px solid #fff;
 }
-.cl-report-export .cell-summary {
+.export-table td {
+  padding: 5px 10px;
+}
+.export-table .cell-summary {
   min-width: 200px;
 }
-.cl-report-export .cell-note {
+.export-table .cell-note {
   min-width: 150px;
-}
-.issue-action {
-  display: none;
-  position: relative;
-  z-index: 100;
-}
-.issue-action.glyphicon-repeat {
-  left: 5px;
-}
-.issue-action.glyphicon-remove {
-  color: #a94442;
-  left: 10px;
 }
 .options label {
   margin-left: 20px;
@@ -465,4 +504,107 @@ label {
   border-radius: 3px;
   padding: 15px 15px 5px;
   font-size: .9em;
+}
+.project-team-container .cell-assignment input[type="number"],
+.project-team-container .cell-ratio input[type="number"] {
+  width: 70px;
+  padding-right: 2px;
+}
+.resources-container .settings-form {
+  margin: 15px 0;
+}
+.resources-container .settings-form .form-group {
+  margin-right: 20px;
+}
+.resources-container .settings-form label {
+  font-weight: bold;
+}
+.resources-container .date-input {
+  width: 75px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.resources-container .form-inline .input-group .short-input-2 {
+  width: 60px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.resources-container .resources-grid h3 {
+  margin-top: 30px;
+  margin-bottom: -10px;
+}
+.resources-container .resources-grid input[type="number"] {
+  width: 70px;
+  padding-right: 2px;
+}
+.resources-container input[type="number"] {
+  -webkit-transition: all linear 0.3s;
+  transition: all linear 0.3s;
+  background: transparent;
+}
+.resources-container input[type="number"].ng-invalid {
+  background: #ffd0c8;
+}
+.resources-container .cell-user-diff {
+  font-weight: bold;
+  color: #6495ed;
+}
+.resources-container .cell-user-diff.overload {
+  color: #ff6161;
+}
+.resources-container .cell-user-diff.normal {
+  color: #3b9e3c;
+}
+.resources-container .comments-row {
+  margin-top: 30px;
+}
+.resources-container .total-row.row > div {
+  border-top: 1px solid #eee;
+  margin-top: 5px;
+  padding-top: 10px;
+}
+.resources-container .total-row td {
+  border-top: 1px solid #ccc;
+}
+.resources-container.resources-export h4 {
+  margin-top: 30px;
+}
+.commitment-container div.checkbox {
+  margin-top: 0;
+}
+.commitment-container .commitment-grid-row {
+  padding: 5px 0 0;
+}
+.commitment-container .missing {
+  background-color: #ffd1cf;
+}
+.commitment-container .new {
+  background-color: #fff7bf;
+}
+.commitment-container .cell-story-key em {
+  cursor: move;
+}
+.commitment-container.commitment-export .export-table {
+  width: 800px;
+}
+.commitment-container.commitment-export .export-table td {
+  border: 1px solid #888;
+}
+.commitment-container .iteration-plan-header-grid {
+  width: 400px;
+}
+.commitment-container .iteration-plan-header-grid td {
+  border: 1px solid #888;
+  padding: 5px 10px;
+}
+.commitment-container .settings-form {
+  margin: 15px 0 30px;
+}
+.commitment-container .settings-form .form-group {
+  margin-right: 20px;
+}
+.commitment-container .settings-form label {
+  font-weight: bold;
+  width: 150px;
+  text-align: right;
 }

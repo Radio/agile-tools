@@ -1,0 +1,159 @@
+<div class="row filter-row">
+    <div class="col-sm-12">
+        <div class="pull-left filter-holder">
+            <button type="button" class="btn btn-sm btn-success" data-ng-click="save()">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+            </button>
+            <button type="button" class="btn btn-sm btn-info" data-ng-click="export()">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
+            </button>
+            <div class="separator">|</div>
+            <button type="button" class="btn btn-sm btn-primary" data-ng-click="sync()">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Sync
+            </button>
+            <span data-ng-show="syncInProgress">Synchronizing...</span>
+            <button type="button" class="btn btn-sm" data-ng-click="updateUsers()">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Update users
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="resources-container">
+    <form class="form-inline settings-form" role="form" data-ng-show="showSettingsForm">
+        <div class="form-group">
+            <label for="startDate">Start:</label>
+            <input class="form-control input-sm date-input" id="startDate" placeholder="dd.mm.yyyy"
+                   data-ng-model="startDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+        </div>
+        <div class="form-group">
+            <label for="endDate">Release:</label>
+            <input class="form-control input-sm date-input" id="releaseDate" placeholder="dd.mm.yyyy"
+                   data-ng-model="releaseDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+        </div>
+        <div class="form-group">
+            <label></label>
+            <p class="form-control-static">
+                <strong>{{ plan.length }}</strong>
+                <span data-ng-show="plan.length">working days</span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="buffer">Buffer:</label>
+            <div class="input-group">
+                <input type="number" class="form-control input-sm short-input-2" id="buffer" placeholder="(1)"
+                       data-ng-change="plan.qaDays = planCalc.getQaDays(); userCalc.recalculateAll()"
+                       data-ng-model="plan.buffer">
+                <div class="input-group-addon">d</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="devDays">Dev:</label>
+            <div class="input-group">
+                <input type="number" class="form-control input-sm short-input-2" id="devDays"
+                       placeholder="({{plan.length - plan.buffer - plan.qaDays}})"
+                       data-ng-change="plan.qaDays = planCalc.getQaDays(); userCalc.recalculateAll()"
+                       data-ng-model="plan.devDays">
+                <div class="input-group-addon">d</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="qaDays">QA:</label>
+            <div class="input-group">
+                <input type="number" class="form-control input-sm short-input-2" id="qaDays"
+                       placeholder="({{plan.length - plan.buffer - plan.devDays}})"
+                       data-ng-change="plan.devDays = planCalc.getDevDays(); userCalc.recalculateAll()"
+                       data-ng-model="plan.qaDays">
+                <div class="input-group-addon">d</div>
+            </div>
+        </div>
+        <!--<button type="submit" class="btn btn-sm btn-primary"-->
+        <!--data-ng-click="showSettingsForm = false">Done</button>-->
+    </form>
+
+    <div class="resources-grid" data-ng-repeat="userType in userTypes">
+        <h3>{{ userType.name }}</h3>
+        <div class="row grid-header">
+            <div class="col-sm-3 col-sm-offset-2">
+                <div class="row">
+                    <div class="col-sm-3">Avail (h)</div>
+                    <div class="col-sm-3">Alloc (h)</div>
+                    <div class="col-sm-3">Free (h)</div>
+                    <div class="col-sm-3" title="Total dev/qa days (excl. CRs and dailies)">Dev/QA (d)</div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-3" title="Additional working days or absent days">Amendment (d)</div>
+                    <div class="col-sm-2" title="Dev/qa hours per day">H/d</div>
+                    <div class="col-sm-2" title="Project dev/qa assignment">Assignment</div>
+                    <div class="col-sm-2" title="Working ratio">Ratio</div>
+                </div>
+            </div>
+        </div>
+        <div class="row"
+             data-ng-repeat="user in plan.users | filter:{type:userType.key}">
+            <div class="col-sm-2">
+                {{ $index + 1 }}. {{ user.name }}
+            </div>
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="col-sm-3">{{ user.available }}</div>
+                    <div class="col-sm-3">{{ user.allocated }}</div>
+                    <div class="col-sm-3 cell-user-diff"
+                         data-ng-class="{'overload': user.diff < 0, 'normal': user.diff > 0}">{{ user.diff }}</div>
+                    <div class="col-sm-3">{{ user.devDaysTotal }}</div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm-3 cell-user-dev-amendment">
+                        <input type="number" class="form-control input-sm"
+                               data-ng-change="userCalc.recalculate(user)" data-ng-model="user.devAmendment"/>
+                    </div>
+                    <div class="col-sm-2 cell-user-dev-h-per-d">
+                        <input type="number" class="form-control input-sm"
+                               data-ng-change="userCalc.recalculate(user)" data-ng-model="user.devHoursPerDay"/>
+                    </div>
+                    <div class="col-sm-2 cell-user-assignment">
+                        <input type="number" class="form-control input-sm"
+                               data-ng-change="userCalc.recalculate(user)" data-ng-model="user.assignment"/>
+                    </div>
+                    <div class="col-sm-2 cell-user-ratio">
+                        <input type="number" class="form-control input-sm"
+                               data-ng-change="userCalc.recalculate(user)" data-ng-model="user.ratio"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1 col-sm-offset-1">
+                <span class="clickable text-danger" data-ng-click="removeUser(user)" title="Remove from plan">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </span>
+            </div>
+        </div>
+        <div class="row total-row">
+            <div class="col-sm-2">
+                <strong>Total ({{ userType.key }})</strong>
+            </div>
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="col-sm-3"><strong>{{ total(userType.key, 'available') }}</strong></div>
+                    <div class="col-sm-3"><strong>{{ total(userType.key, 'allocated') }}</strong></div>
+                    <div class="col-sm-3 cell-user-diff"
+                         data-ng-class="{'overload': total(userType.key, 'diff') < 0, 'normal': total(userType.key, 'diff') > 0}">
+                        <strong>{{ total(userType.key, 'diff') }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row comments-row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <h4>Comments</h4>
+                <textarea class="form-control" cols="50" rows="6"
+                          data-ng-model="plan.comments"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

@@ -28,7 +28,7 @@
             </p>
             <ul class="project-versions">
                 <li data-ng-repeat="version in project.versions | filter:searchVersion">
-                    <a href="/project/{{ project.key }}/{{ version.name }}">
+                    <a href="/project/{{ project.key }}/version/{{ version.name }}">
                         {{version.name}}
                     </a>
                 </li>

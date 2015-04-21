@@ -20,11 +20,11 @@ angular.module('agile', [
              * Managing redirects through native $routeProvider.
              */
             $routeProvider
-                .when('/project/:projectKey/:versionName', {
+                .when('/project/:projectKey/version/:versionName', {
                     redirectTo: function(params) {
                         var defaultTab = 'confidence_report';
                         return '/project/' + params.projectKey
-                            + '/' + params.versionName + '/' + defaultTab;
+                            + '/version/' + params.versionName + '/' + defaultTab;
                     }
                 })
                 .otherwise({
@@ -40,12 +40,17 @@ angular.module('agile', [
                 .when('/performance/:user', 'performance')
                     .segment('performance', getSegmentParams('Performance', '/performance.html', true, false, ['user']))
                 .when('/project/:projectKey', 'project')
-                .when('/project/:projectKey/:versionName/confidence_report', 'project.version.confidence_report')
-                .when('/project/:projectKey/:versionName/confidence_report/export', 'project.version.confidence_report.export')
-                .when('/project/:projectKey/:versionName/resources', 'project.version.resources')
+                .when('/project/:projectKey/team', 'project.team')
+                .when('/project/:projectKey/version/:versionName/confidence_report', 'project.version.confidence_report')
+                .when('/project/:projectKey/version/:versionName/confidence_report/export', 'project.version.confidence_report.export')
+                .when('/project/:projectKey/version/:versionName/resources', 'project.version.resources')
+                .when('/project/:projectKey/version/:versionName/resources/export', 'project.version.resources.export')
+                .when('/project/:projectKey/version/:versionName/plan', 'project.version.plan')
+                .when('/project/:projectKey/version/:versionName/plan/export', 'project.version.plan.export')
                     .segment('project', getSegmentParams('Project', '/project.html', true))
                     .within('project')
                         .segment('overview', getSegmentParams(null, '/project/overview.html', false, true))
+                        .segment('team', getSegmentParams('Team', '/project/team.html', false, false))
                         .segment('version', getSegmentParams('Version', '/project/version.html'))
                         .within('version')
                             .segment('confidence_report', getSegmentParams('Version_ConfidenceReport', '/project/version/confidence_report.html', false, false, ['projectKey', 'versionName']))
@@ -54,6 +59,15 @@ angular.module('agile', [
                                 .segment('export', getSegmentParams('Version_ConfidenceReport_Export', '/project/version/confidence_report/export.html'))
                                 .up()
                             .segment('resources', getSegmentParams('Version_Resources', '/project/version/resources.html', false, false, ['projectKey', 'versionName']))
+                            .within('resources')
+                                .segment('edit', getSegmentParams(null, '/project/version/resources/edit.html', false, true))
+                                .segment('export', getSegmentParams('Version_Resources_Export', '/project/version/resources/export.html'))
+                                .up()
+                            .segment('plan', getSegmentParams('Version_Commitment', '/project/version/commitment.html', false, false, ['projectKey', 'versionName']))
+                            .within('plan')
+                                .segment('edit', getSegmentParams(null, '/project/version/commitment/edit.html', false, true))
+                                .segment('export', getSegmentParams('Version_Commitment_Export', '/project/version/commitment/export.html'))
+                                .up()
                             .up()
                         .up()
                 .when('/users', 'users')
@@ -66,7 +80,7 @@ angular.module('agile', [
                     .within('config')
                         .segment('global', getSegmentParams(null, '/config.html', false, true))
                         .segment('project', getSegmentParams(null, '/config.html', false, false, ['projectKey']))
-                    .up()
+                        .up()
                 .when('/login', 'login')
                     .segment('login', getSegmentParams('Login', '/login.html'))
             ;

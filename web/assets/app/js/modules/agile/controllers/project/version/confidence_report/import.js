@@ -22,7 +22,7 @@ angular.module('agile.controllers')
                 if (issueType) {
                     query.jql += ' AND issuetype = "' + issueType + '"';
                     if (issueType == 'Bug Report') {
-                        query.jql += ' AND status in (Open, "In Progress", Reopened, "Feedback required", "Feedback available")';
+                        query.jql += ' AND status not in ("Closed", "Resolved")';
                     }
                 }
                 if (additionalFilters) {
@@ -44,7 +44,7 @@ angular.module('agile.controllers')
                 });
                 jiraIssuesApi.enableCache();
             };
-            $scope.hideImport = function()
+            $scope.hideImportForm = function()
             {
                 $scope.showImport = false;
                 $scope.showImportLoader = false;
@@ -85,13 +85,13 @@ angular.module('agile.controllers')
 
                                     $scope.$emit('confidenceReportChanged');
 
-                                    $scope.hideImport();
+                                    $scope.hideImportForm();
                                     Helper.setAlert('success', 'Issues state has been updated.');
                                 });
                             });
                         });
                     } else {
-                        $scope.hideImport();
+                        $scope.hideImportForm();
                     }
                 }
             };

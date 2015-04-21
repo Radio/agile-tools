@@ -21,6 +21,15 @@ angular.module('agile.controllers')
                     });
             };
 
+            $scope.updateProject = function() {
+                Api.get('ProjectsImport').post({
+                    key: $scope.project.key
+                }).then(function(response) {
+                    Helper.setAlert('success', response.message);
+                    loadProject();
+                });
+            };
+
             function loadProject()
             {
                 return Api.get('Project').get($routeParams.projectKey)

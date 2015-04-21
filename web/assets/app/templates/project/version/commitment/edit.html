@@ -1,0 +1,100 @@
+<div class="row filter-row">
+    <div class="col-sm-12">
+        <div class="pull-left filter-holder">
+            <button type="button" class="btn btn-sm btn-success" data-ng-click="save()">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+            </button>
+            <button type="button" class="btn btn-sm btn-info" data-ng-click="export()">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
+            </button>
+            <div class="separator">|</div>
+            <button type="button" class="btn btn-sm btn-primary" data-ng-click="sync()">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Sync
+            </button>
+            <span data-ng-show="syncInProgress">Synchronizing...</span>
+        </div>
+    </div>
+</div>
+
+<div class="commitment-container">
+    <form class="form-inline settings-form" role="form" data-ng-show="showSettingsForm">
+        <div class="form-group">
+            <label for="startDate">Planning:</label>
+            <input class="form-control input-sm date-input" id="startDate" placeholder="dd.mm.yyyy"
+                   data-ng-model="startDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+        </div>
+        <div class="form-group">
+            <label for="freezeDate">Feature-freeze:</label>
+            <input class="form-control input-sm date-input" id="freezeDate" placeholder="dd.mm.yyyy"
+                   data-ng-model="freezeDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+        </div>
+        <div class="form-group">
+            <label for="endDate">Release:</label>
+            <input class="form-control input-sm date-input" id="releaseDate" placeholder="dd.mm.yyyy"
+                   data-ng-model="releaseDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+        </div>
+        <br/><br/>
+        <div class="form-group">
+            <label for="projectName">Project Name:</label>
+            <input class="form-control input-sm" id="projectName" data-ng-model="plan.projectName">
+        </div>
+        <div class="form-group">
+            <label for="projectManager">Project Manager:</label>
+            <input class="form-control input-sm" id="projectManager" data-ng-model="plan.projectManager">
+        </div>
+        <div class="form-group">
+            <label for="iteration">Iteration:</label>
+            <input class="form-control input-sm" id="iteration" placeholder="#" data-ng-model="plan.iteration">
+        </div>
+        <br/><br/>
+        <div class="form-group">
+            <label for="approveBy">Approve By:</label>
+            <input class="form-control input-sm" id="approveBy" data-ng-model="plan.approveBy">
+        </div>
+        <div class="form-group">
+            <label for="approveTill">Approval Till:</label>
+            <input class="form-control input-sm date-input" id="approveTill" placeholder="dd.mm.yyyy"
+                   data-ng-model="approveTill" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+        </div>
+    </form>
+
+    <div class="commitment-grid">
+        <div class="row grid-header">
+            <div class="col-sm-1">Export</div>
+            <div class="col-sm-1">Story Key</div>
+            <div class="col-sm-3">Summary</div>
+            <div class="col-sm-3">Notes</div>
+            <div class="col-sm-3">Missing info</div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="sorting-container" data-ui-sortable="sortableOptions" data-ng-model="plan.issues">
+            <div class="row commitment-grid-row"
+                 title="{{ issue.missing ? 'This issue is not in CL Report anymore.' : '' }}"
+                 data-ng-class="{'missing': issue.missing, 'new': issue.new}"
+                 data-ng-repeat="issue in plan.issues track by issue.key">
+                <div class="col-sm-1">
+                    <input type="checkbox" class="checckbox" data-ng-model="issue.export"/>
+                </div>
+                <div class="col-sm-1 cell-story-key">
+                    <em data-ng-if="issue.storyKey">{{ issue.storyKey }}</em>
+                    <em class="text-secondary" data-ng-if="!issue.storyKey">[No key]</em>
+                </div>
+                <div class="col-sm-3">
+                    <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ issue.key }}"
+                       title="{{ issue.key }} | Open in Jira" target="_blank">{{ issue.summary }}</a>
+                </div>
+                <div class="col-sm-3">
+                    <textarea cols="40" rows="1" data-ng-model="issue.notes"></textarea>
+                </div>
+                <div class="col-sm-3">
+                    <textarea cols="40" rows="1" data-ng-model="issue.required"></textarea>
+                </div>
+                <div class="col-sm-1">
+                    <span class="clickable text-danger" data-ng-click="removeIssue(issue)" title="Remove from plan">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

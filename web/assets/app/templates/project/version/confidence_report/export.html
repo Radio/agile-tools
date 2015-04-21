@@ -1,7 +1,4 @@
-<p>
-    <span class="a" data-ng-click="hideExportPage()">&larr; Back</span>
-</p>
-
+<p><span class="a" data-ng-click="hideExportPage()">&larr; Back</span></p>
 <div>
     <div class="checkbox">
         <label><input type="checkbox" data-ng-model="expandAssignees"> Expand Assigness</label>
@@ -14,9 +11,9 @@
         Below you can find the Confidence Levels report.
     </p>
 
-    <table class="cl-report-export">
+    <table class="cl-report-export export-table">
         <thead class="cl-report">
-            <tr class="cl-report-header">
+            <tr class="cl-report-header export-header">
                 <td><strong>Key</strong></td>
                 <td><strong>Summary</strong></td>
                 <td><strong>Assignee</strong></td>
@@ -36,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="cl-report-row"
+            <tr class="cl-report-row export-row"
                  data-ng-repeat="issueInfo in confidenceReport.issues | filter:{export:true}"
                  data-ng-init="cl = issueInfo.cl - 0"
                  data-ng-class="{good: cl > 6, 'so-so': cl > 3 && cl <= 6, 'bad': cl <= 3}">

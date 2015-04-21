@@ -1,5 +1,6 @@
 angular.module('agile.directives')
-    .directive('cacheManager', ['$templateCache', 'localStorageService', 'Helper', 'TEMPLATES_URL',
+    .directive('cacheManager', [
+        '$templateCache', 'localStorageService', 'Helper', 'TEMPLATES_URL',
         function($templateCache, Storage, Helper, TEMPLATES_URL) {
 
             function controller($scope) {

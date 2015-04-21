@@ -54,6 +54,9 @@ label {
     padding: 10px 15px;
     border-radius: 0;
 }
+.text-secondary {
+    color: #ccc;
+}
 .page-header {
     position: relative;
 
@@ -125,13 +128,21 @@ label {
         padding: 2px 40px;
         margin: 0;
     }
+    .separator {
+        color: #ccc;
+        display: inline-block;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 }
-.cl-report-header {
+.grid-header {
     margin-top: 10px;
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #ccc;
+}
 
+.cl-report-header {
     .cell-progress{
         padding: 0 5px;
         text-align: right;
@@ -153,6 +164,16 @@ label {
 }
 .cl-report {
     margin-bottom: 30px;
+
+    h4 {
+        margin-left: -15px;
+        margin-top: 30px;
+
+        small {
+            position: relative;
+            top: -3px;
+        }
+    }
 }
 .cl-report-row {
 
@@ -160,12 +181,49 @@ label {
         font-size: 13px;
     }
 
+    @hoverColor: #e8e8e8;
     &:hover {
-        background: #e8e8e8;
+        background: @hoverColor;
 
-        .issue-time,
-        .issue-action {
+        .issue-time{
             display: inline;
+        }
+        .cell-key {
+            .issue-actions-box {
+                display: block;
+            }
+        }
+    }
+    .cell-key {
+        position: relative;
+        .issue-actions-box {
+            position: absolute;
+            left: -10px;
+            top: 0;
+            padding-left: 20px;
+            width: 100%;
+            height: 100%;
+            display: none;
+            .issue-actions {
+                background-color: @hoverColor;
+//                padding: 0 15px;
+                width: 100%;
+            }
+            .small-key {
+                position: absolute;
+                left: -10px;
+                top: 2px;
+                -webkit-transform: rotate(270deg);
+                -moz-transform: rotate(270deg);
+                -o-transform: rotate(270deg);
+                writing-mode: bt-rl;
+                font-size: 0.8em;
+
+            }
+        }
+        .issue-action {
+            margin: 0 5px;
+            z-index: 100;
         }
     }
 
@@ -194,6 +252,7 @@ label {
     .wrong-version {
         background-color: rgba(255, 47, 49, 0.15);
     }
+
     .cell-progress {
         padding: 0 5px;
         input {
@@ -326,15 +385,14 @@ label {
 }
 
 
-.cl-report-export {
+.export-table {
     border-collapse: collapse;
 
-    .cl-report-header {
+    .export-header {
         background-color: #c3d9ff;
     }
 
     .cl-report-row {
-
         &.good {
             background-color: #cfe6c4;
         }
@@ -348,30 +406,19 @@ label {
         .cell-status {
             color: #333;
         }
+        td {
+            border-bottom: 1px solid #fff;
+        }
     }
 
     td {
         padding: 5px 10px;
-        border-bottom: 1px solid #fff;
     }
     .cell-summary {
         min-width: 200px;
     }
     .cell-note {
         min-width: 150px;
-    }
-}
-.issue-action {
-    display: none;
-    position: relative;
-    z-index: 100;
-
-    &.glyphicon-repeat {
-        left: 5px;
-    }
-    &.glyphicon-remove {
-        color: #a94442;
-        left: 10px;
     }
 }
 .options {
@@ -537,5 +584,143 @@ label {
         border-radius: 3px;
         padding: 15px 15px 5px;
         font-size: .9em;
+    }
+}
+
+.project-team-container {
+    .cell-assignment,
+    .cell-ratio {
+        input[type="number"] {
+            width: 70px;
+            padding-right: 2px;
+        }
+    }
+}
+.resources-container {
+    .settings-form {
+        margin: 15px 0;
+
+        .form-group {
+            margin-right: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+    }
+    .date-input {
+        width: 75px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .form-inline .input-group {
+        .short-input-2 {
+            width: 60px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+    .resources-grid {
+        h3 {
+            margin-top: 30px;
+            margin-bottom: -10px;
+
+        }
+        input[type="number"] {
+            width: 70px;
+            padding-right: 2px;
+        }
+    }
+    input[type="number"] {
+        -webkit-transition: all linear 0.3s;
+        transition: all linear 0.3s;
+        background: transparent;
+        &.ng-invalid {
+            background: #ffd0c8;
+        }
+    }
+    .cell-user-diff {
+        font-weight: bold;
+        color: #6495ed;
+        &.overload {
+            color: #ff6161;
+        }
+        &.normal {
+            color: #3b9e3c;
+        }
+    }
+    .comments-row {
+        margin-top: 30px;
+    }
+
+    .total-row {
+        &.row>div {
+            border-top: 1px solid #eee;
+            margin-top: 5px;
+            padding-top: 10px;
+        }
+        td {
+            border-top: 1px solid #ccc;
+        }
+    }
+    &.resources-export {
+        h4 {
+            margin-top: 30px;
+        }
+    }
+}
+.commitment-container {
+    div.checkbox {
+        margin-top: 0;
+    }
+    .commitment-grid-row {
+//        -webkit-transition: all linear 0.3s;
+//        transition: all linear 0.3s;
+        padding: 5px 0 0;
+    }
+    .missing {
+        background-color: #ffd1cf;
+    }
+    .new {
+        background-color: #fff7bf;
+    }
+    .cell-story-key {
+        em {
+            cursor: move;
+        }
+    }
+    &.commitment-export {
+        .export-table {
+            width: 800px;
+            td {
+                border: 1px solid #888;
+            }
+        }
+    }
+    .iteration-plan-header-grid {
+        width: 400px;
+        td {
+            border: 1px solid #888;
+            padding: 5px 10px;
+        }
+    }
+    .settings-form {
+        margin: 15px 0 30px;
+
+        .form-group {
+            margin-right: 20px;
+        }
+        label {
+            font-weight: bold;
+            width: 150px;
+            text-align: right;
+        }
+        .date-input {
+//            width: 75px;
+//            padding-left: 5px;
+//            padding-right: 5px;
+        }
+        #iteration {
+//            width: 40px;
+        }
     }
 }

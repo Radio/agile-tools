@@ -1,0 +1,56 @@
+<p><span class="a" data-ng-click="hideExportPage()">&larr; Back</span></p>
+<div class="commitment-container commitment-export">
+    <hr>
+    <br>
+    <h2>Iteration Plan</h2>
+    <table border="1" class="iteration-plan-header-grid">
+        <tr><td><strong>Project:</strong></td><td>{{ plan.projectName }}</td></tr>
+        <tr><td><strong>Project Manager:</strong></td><td>{{ plan.projectManager }}</td></tr>
+        <tr><td><strong>Iteration:</strong></td><td>{{ plan.iteration }}</td></tr>
+        <tr><td><strong>Planning date:</strong></td><td>{{ plan.startDate | dateFormat:'YYYY-MM-DD' }}</td></tr>
+        <tr><td><strong>Feature-freeze:</strong></td><td>{{ plan.freezeDate | dateFormat:'YYYY-MM-DD' }}</td></tr>
+        <tr><td><strong>Release date:</strong></td><td>{{ plan.releaseDate | dateFormat:'YYYY-MM-DD' }}</td></tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td><strong>Approve by:</strong></td><td>{{ plan.approveBy }}</td></tr>
+        <tr><td><strong>Approval till:</strong></td><td>{{ plan.approveTill | dateFormat:'YYYY-MM-DD' }}</td></tr>
+        <tr><td><strong>Approval on:</strong></td><td></td></tr>
+    </table>
+    <br/>
+    <h3>User Stories / Tasks planned: {{ plannedTotal() }}</h3>
+    <table class="commitment-grid export-table" border="1">
+        <tr class="grid-header export-header">
+            <td width="10%"><strong>Story Key</strong></td>
+            <td width="50%"><strong>Summary</strong></td>
+            <td width="40%"><strong>Notes</strong></td>
+        </tr>
+        <tr class="commitment-grid-row"
+             data-ng-repeat="issue in plan.issues | filter:{export: true} track by issue.key">
+            <td class="cell-story-key">
+                <em data-ng-if="issue.storyKey">{{ issue.storyKey }}</em>
+            </td>
+            <td>{{ issue.summary }}</td>
+            <td>{{ issue.notes | newlines }}</td>
+        </tr>
+    </table>
+    <br>
+    <h3>User Stories / Tasks that require additional information: {{ requiredTotal() }}</h3>
+    <table class="commitment-grid export-table" border="1">
+        <tr class="grid-header export-header">
+            <td width="10%"><strong>Story Key</strong></td>
+            <td width="50%"><strong>Summary</strong></td>
+            <td width="40%"><strong>Requirements</strong></td>
+        </tr>
+        <tr class="commitment-grid-row"
+            data-ng-repeat="issue in plan.issues | filter:{export: true} track by issue.key"
+            data-ng-if="issue.required"
+                >
+            <td class="cell-story-key">
+                <em data-ng-if="issue.storyKey">{{ issue.storyKey }}</em>
+            </td>
+            <td>{{ issue.summary }}</td>
+            <td>{{ issue.required | newlines }}</td>
+        </tr>
+    </table>
+    <br>
+    <hr>
+</div>

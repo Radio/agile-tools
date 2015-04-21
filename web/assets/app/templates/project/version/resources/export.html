@@ -1,0 +1,53 @@
+<p><span class="a" data-ng-click="hideExportPage()">&larr; Back</span></p>
+<div class="resources-container resources-export">
+    <div class="checkbox">
+        <label><input type="checkbox" data-ng-model="hideAdditionalInfo"> Hide additional info</label>
+    </div>
+
+    <hr>
+    <br>
+    <h3>Capacity Calculation</h3>
+    <div data-ng-repeat="userType in userTypes">
+        <h4>{{ userType.name }}</h4>
+        <table class="resources-grid export-table">
+            <tr class="export-header">
+                <td width="200"></td>
+                <td>Available (h)</td>
+                <td>Allocated (h)</td>
+                <td>Free (h)</td>
+                <td data-ng-hide="hideAdditionalInfo" title="Total dev/qa days (excl. CRs and dailies)">Dev/QA (d)</td>
+                <td data-ng-hide="hideAdditionalInfo" title="Additional working days or absent days">Amendment (d)</td>
+                <td data-ng-hide="hideAdditionalInfo" title="Dev/qa hours per day">H/d</td>
+                <td data-ng-hide="hideAdditionalInfo" title="Project dev/qa assignment">Assignment</td>
+                <td data-ng-hide="hideAdditionalInfo" title="Working ratio">Ratio</td>
+            </tr>
+            <tr data-ng-repeat="user in plan.users | filter:{type:userType.key}">
+                <td>{{ $index + 1 }}. {{ user.name }}</td>
+                <td>{{ user.available }}</td>
+                <td>{{ user.allocated }}</td>
+                <td class="cell-user-diff"
+                    data-ng-class="{'overload': user.diff < 0, 'normal': user.diff > 0}">{{ user.diff }}</td>
+                <td data-ng-hide="hideAdditionalInfo">{{ user.devDaysTotal }}</td>
+                <td data-ng-hide="hideAdditionalInfo">{{ user.devAmendment }}</td>
+                <td data-ng-hide="hideAdditionalInfo">{{ user.devHoursPerDay }}</td>
+                <td data-ng-hide="hideAdditionalInfo">{{ user.assignment }}</td>
+                <td data-ng-hide="hideAdditionalInfo">{{ user.ratio }}</td>
+            </tr>
+            <tr class="total-row">
+                <td class="cell-total"><strong>Total ({{ userType.key }})</strong></td>
+                <td><strong>{{ total(userType.key, 'available') }}</strong></td>
+                <td><strong>{{ total(userType.key, 'allocated') }}</strong></td>
+                <td class="cell-user-diff"
+                    data-ng-class="{'overload': total(userType.key, 'diff') < 0, 'normal': total(userType.key, 'diff') > 0}">
+                    <strong>{{ total(userType.key, 'diff') }}</strong>
+                </td>
+                <td data-ng-hide="hideAdditionalInfo" colspan="5"></td>
+            </tr>
+        </table>
+    </div>
+    <h4>Comments</h4>
+    {{ plan.comments | newlines }}
+    <span data-ng-hide="plan.comments">—</span>
+    <br>
+    <hr>
+</div>
