@@ -45,13 +45,13 @@ angular.module('agile.controllers')
                     if ($scope.plan.length) {
                         return $scope.plan.length - $scope.plan.buffer - $scope.plan.qaDays;
                     }
-                    return null;
+                    return $scope.plan.devDays;
                 },
                 getQaDays: function () {
                     if ($scope.plan.length) {
                         return $scope.plan.length - $scope.plan.buffer - $scope.plan.devDays;
                     }
-                    return null;
+                    return $scope.plan.qaDays;
                 }
             };
             $scope.userCalc = userCalc;
@@ -86,6 +86,10 @@ angular.module('agile.controllers')
             $scope.save = saveResourcePlan;
             $scope.export = exportResourcePlan;
             $scope.sync = function() {
+                if (!$scope.plan.users.length) {
+                    Helper.setAlert('warning', 'Please import users before.');
+                    return;
+                }
                 synchronize();
                 saveResourcePlan();
             };

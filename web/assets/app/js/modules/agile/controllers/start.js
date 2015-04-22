@@ -1,5 +1,5 @@
 angular.module('agile.controllers')
-    .controller('Start', ['$scope', '$location', 'Api', 'Helper', function($scope, $location, Api, Helper) {
+    .controller('Start', function($scope, Api, Helper) {
 
         Helper.setTitle('Start');
 
@@ -18,4 +18,4 @@ angular.module('agile.controllers')
                 });
             });
         };
-    }]);
+    });

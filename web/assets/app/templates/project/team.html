@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1><a href="/project/{{ project.key }}">{{ config.value('project_name') || project.name }}</a> / Team</h1>
+    <h1><a href="project/{{ project.key }}">{{ config.value('project_name') || project.name }}</a> / Team</h1>
     <div data-ng-show="alert.message" role="alert"
          class="alert alert-{{alert.type}}">{{alert.message}}</div>
 </div>
@@ -36,7 +36,7 @@
     </div>
     <div class="row project-team-row" data-ng-repeat="user in project.users">
         <div class="col-md-2 cell-name">
-            <a href="/performance/{{ user.key }}">{{ user.name }}</a>
+            <a href="performance/{{ user.key }}">{{ user.name }}</a>
         </div>
         <div class="col-md-2 cell-type">
             <select data-ng-model="user.type"
