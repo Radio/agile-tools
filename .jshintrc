@@ -1,0 +1,15 @@
+{
+    "node": true,
+    "curly": true,
+    "eqnull": true,
+    "eqeqeq": false,
+    "undef": true,
+    "globals": {
+        "$": false,
+        "ResponsiveBootstrapToolkit": false,
+        "angular": false,
+        "confirm": false,
+        "moment": false,
+        "window": false
+    }
+}

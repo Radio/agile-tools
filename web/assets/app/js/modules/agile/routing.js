@@ -1,5 +1,5 @@
 angular.module('agile')
-    .constant('TEMPLATES_URL', '/assets/app/templates')
+    .constant('TEMPLATES_URL', 'assets/app/templates')
     .factory('Routing', function($routeSegment, $rootScope) {
 
         var base = '';
