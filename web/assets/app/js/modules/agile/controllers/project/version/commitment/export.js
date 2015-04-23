@@ -1,17 +1,9 @@
 angular.module('agile.controllers')
     .controller('Version_Commitment_Export', ['$scope', '$location',
         function($scope, $location) {
-
-            $scope.$watch('plan', function () {
-                if ($scope.plan && $scope.plan.issues) {
-
-                    $scope.plan.issues
-                }
-            });
-
             $scope.hideExportPage = function() {
-                $location.path('/project/' + $scope.project.key
-                    + '/version/' + $scope.version.name + '/plan');
+                $location.path('/project/' + $scope.project.key +
+                    '/version/' + $scope.version.name + '/plan');
             };
             $scope.plannedTotal = function() {
                 return $scope.plan.issues.reduce(function(total, issue) {

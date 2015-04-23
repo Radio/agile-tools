@@ -71,7 +71,7 @@ angular.module('agile.controllers')
             function validateYaml(yamlConfig)
             {
                 try {
-                    if (yamlConfig == '') {
+                    if (yamlConfig === '') {
                         return {};
                     }
                     var loadedConfig = yamlFilter(yamlConfig, 'load');

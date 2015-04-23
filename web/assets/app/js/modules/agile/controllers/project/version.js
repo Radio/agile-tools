@@ -8,7 +8,7 @@ angular.module('agile.controllers')
                     if ($scope.version) {
                         Helper.setTitle($scope.version.name + ' of ' + $scope.project.name);
                     } else {
-                        Helper.setAlert('danger', 'Version "' + $routeParams.versionName + '" not found.')
+                        Helper.setAlert('danger', 'Version "' + $routeParams.versionName + '" not found.');
                     }
                 }
             });

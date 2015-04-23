@@ -35,8 +35,8 @@ angular.module('agile')
             .when('/project/:projectKey/version/:versionName', {
                 redirectTo: function(params) {
                     var defaultTab = 'confidence_report';
-                    return '/project/' + params.projectKey
-                        + '/version/' + params.versionName + '/' + defaultTab;
+                    return '/project/' + params.projectKey +
+                        '/version/' + params.versionName + '/' + defaultTab;
                 }
             })
             .otherwise({

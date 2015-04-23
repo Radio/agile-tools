@@ -78,7 +78,7 @@ angular.module('agile.controllers')
                     }
                 }
 
-                var spentPerBug = perBug.map(function(info) { return info.spent });
+                var spentPerBug = perBug.map(function(info) { return info.spent; });
 
                 return {
                     perBug: perBug,
@@ -87,7 +87,7 @@ angular.module('agile.controllers')
                     spentMin: Math.min.apply(this, spentPerBug),
                     spentMax: Math.max.apply(this, spentPerBug),
                     numberOfBugs: spentPerBug.length
-                }
+                };
             }
 
             function drawBugsChart(bugsStats)

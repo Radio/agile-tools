@@ -78,7 +78,7 @@ angular.module('agile.controllers')
             });
             $scope.$watch('plan.length', function () {
                 $scope.plan.qaDays = planCalc.getQaDays();
-                userCalc.recalculateAll()
+                userCalc.recalculateAll();
             });
             $scope.startDate = dateGetterSetterFactory('startDate');
             $scope.releaseDate = dateGetterSetterFactory('releaseDate');
@@ -257,10 +257,9 @@ angular.module('agile.controllers')
                 return function(dateString) {
                     if (angular.isDefined(dateString)) {
                         var d = dateString.split('.');
-                        return $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
-                    } else {
-                        return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
+                        $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
                     }
+                    return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
                 };
             }
         }]);

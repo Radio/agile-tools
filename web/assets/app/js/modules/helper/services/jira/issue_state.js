@@ -42,7 +42,7 @@ angular.module('helper')
                         case 'qa':
                             issueState.qa = getStatusCode(subTask);
                             if (subTask.assignee.key != 'chuck.norris') {
-                                issueState.qa_assigned = 1
+                                issueState.qa_assigned = 1;
                             }
                             break;
                     }
@@ -65,8 +65,8 @@ angular.module('helper')
 
             function defineSimpleTaskState(issue, issueState)
             {
-                if (issue.issuetype.name != 'Task'
-                    && issue.issuetype.name != 'Bug Report') {
+                if (issue.issuetype.name != 'Task' &&
+                    issue.issuetype.name != 'Bug Report') {
                     return;
                 }
                 var taskType = getTaskType(issue);
@@ -101,8 +101,7 @@ angular.module('helper')
                         issueState.status = 'In TBD';
                     } else if (issueState.qa == 0 || issueState.qa == 2) {
                         issueState.status = 'In QA';
-                    } else if (issueState.cr == 0 || issueState.cr == 2
-                        || issueState.tc == 0 || issueState.tc == 2) {
+                    } else if (issueState.cr == 0 || issueState.cr == 2 || issueState.tc == 0 || issueState.tc == 2) {
                         issueState.status = 'Resolved';
                     } else {
                         issueState.status = 'Done';
@@ -140,5 +139,5 @@ angular.module('helper')
 
                     return issueState;
                 }
-            }
+            };
         }]);

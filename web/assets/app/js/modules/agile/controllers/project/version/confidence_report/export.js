@@ -5,8 +5,8 @@ angular.module('agile.controllers')
             $scope.clDates = [];
 
             $scope.hideExportPage = function() {
-                $location.path('/project/' + $scope.project.key
-                    + '/version/' + $scope.version.name + '/confidence_report');
+                $location.path('/project/' + $scope.project.key +
+                    '/version/' + $scope.version.name + '/confidence_report');
             };
 
             $scope.$watch('confidenceReport', function () {
@@ -35,7 +35,7 @@ angular.module('agile.controllers')
                     } else if (aDate > bDate) {
                         return -1;
                     }
-                    return 0
+                    return 0;
                 });
             }
         }]);

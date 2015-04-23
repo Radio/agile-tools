@@ -16,8 +16,8 @@ angular.module('agile.controllers')
                 var query = {
                     "max_result": maxResults || 50,
                     "_fields": 'summary,issuetype,assignee,status',
-                    "jql": 'project = "' + $scope.project.key + '"'
-                        + ' AND fixVersion = "' + $scope.version.name + '"'
+                    "jql": 'project = "' + $scope.project.key + '"' +
+                        ' AND fixVersion = "' + $scope.version.name + '"'
                 };
                 if (issueType) {
                     query.jql += ' AND issuetype = "' + issueType + '"';

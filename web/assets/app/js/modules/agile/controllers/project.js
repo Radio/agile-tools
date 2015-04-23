@@ -4,7 +4,7 @@ angular.module('agile.controllers')
         Config.load($routeParams.projectKey).then(function() {
             loadProject().then(function() {
                 Helper.setTitle(Config.value('project_name') || $scope.project.name);
-            })
+            });
         });
 
         $scope.Config = Config;

@@ -94,8 +94,8 @@ angular.module('agile.controllers')
 
                 }, function() {
                     Helper.setAlert('warning', 'Please build the Confidence Level Report first.');
-                    $location.path('/project/' + $scope.project.key
-                        + '/version/' + $scope.version.name + '/confidence_report');
+                    $location.path('/project/' + $scope.project.key +
+                        '/version/' + $scope.version.name + '/confidence_report');
                 });
         }
 
@@ -228,10 +228,9 @@ angular.module('agile.controllers')
             return function(dateString) {
                 if (angular.isDefined(dateString)) {
                     var d = dateString.split('.');
-                    return $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
-                } else {
-                    return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
+                    $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
                 }
+                return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
             };
         }
     });

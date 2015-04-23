@@ -94,10 +94,10 @@ angular.module('agile.filters')
                 if (/^[0-9]+$/.test(expression)) {
                     cl = parseInt(expression);
                     operation = '=';
-                } else if (execResult = /^([<>])\s*([0-9]+)?$/.exec(expression)) {
+                } else if (!!(execResult = /^([<>])\s*([0-9]+)?$/.exec(expression))) {
                     cl = execResult[2];
                     operation = execResult[1];
-                } else if (execResult = /^([0-9]+)\s*\-\s*([0-9]+)$/.exec(expression)) {
+                } else if (!!(execResult = /^([0-9]+)\s*\-\s*([0-9]+)$/.exec(expression))) {
                     clMin = parseInt(execResult[1]);
                     clMax = parseInt(execResult[2]);
                     operation = '><';
@@ -147,7 +147,7 @@ angular.module('agile.filters')
                     if (realExpression.trim().length < 2) {
                         return input;
                     }
-                    return filters[i].handler(input, expression.substr(filters[i].key.length))
+                    return filters[i].handler(input, expression.substr(filters[i].key.length));
                 }
             }
 
@@ -184,5 +184,5 @@ angular.module('agile.filters')
             } else {
                 return runFilter(input, expression);
             }
-        }
+        };
     }]);

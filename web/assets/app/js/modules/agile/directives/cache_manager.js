@@ -7,8 +7,8 @@ angular.module('agile.directives')
                 $scope.clear = function() {
                     $templateCache.removeAll();
                     Storage.clearAll();
-                    Helper.setAlert('success', 'Cache has been cleared.')
-                }
+                    Helper.setAlert('success', 'Cache has been cleared.');
+                };
             }
 
             return {

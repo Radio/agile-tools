@@ -48,7 +48,7 @@ angular.module('agile.services')
                 if (redirectTo) {
                     $location.path(redirectTo);
                 } else {
-                    if ($location.path() == loginUrl) {
+                    if ($location.path() == '/login') {
                         $location.path(startUrl);
                     } else {
                         $window.location.reload();
