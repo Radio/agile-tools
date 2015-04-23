@@ -30,4 +30,4 @@ angular.module('agile.filters')
             }
             return sign + (resultStringParts.length ? resultStringParts.join(' ') : 0);
         };
-    }])
+    }]);

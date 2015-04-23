@@ -12,7 +12,7 @@ angular.module('agile.directives')
                         Auth.check().error(function() {
                             Auth.setRedirectTo($location.path());
                             Helper.setAlert('warning', 'Your session has been expired.');
-                            $location.path(loginUrl)
+                            $location.path(loginUrl);
                         });
                     }, checkingPeriod);
                 }
@@ -27,7 +27,7 @@ angular.module('agile.directives')
                     });
                     $scope.signOut = function() {
                         Auth.signOut().success(function() {
-                            Helper.setAlert('success', 'You have signed out successfully.')
+                            Helper.setAlert('success', 'You have signed out successfully.');
                         });
                     };
                 }],

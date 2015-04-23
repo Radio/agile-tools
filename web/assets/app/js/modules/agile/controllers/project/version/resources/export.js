@@ -5,7 +5,7 @@ angular.module('agile.controllers')
             $scope.hideAdditionalInfo = true;
 
             $scope.hideExportPage = function() {
-                $location.path('/project/' + $scope.project.key
-                    + '/version/' + $scope.version.name + '/resources');
+                $location.path('/project/' + $scope.project.key +
+                    '/version/' + $scope.version.name + '/resources');
             };
         }]);

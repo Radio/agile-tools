@@ -7,7 +7,7 @@ angular.module('agile.filters')
             } else {
                 return null;
             }
-        }
+        };
     }])
     .filter('dateDiff', [function() {
         return function(date1, date2) {
@@ -20,5 +20,5 @@ angular.module('agile.filters')
             } else {
                 return null;
             }
-        }
+        };
     }]);

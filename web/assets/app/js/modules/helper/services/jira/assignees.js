@@ -45,5 +45,5 @@ angular.module('helper')
 
                     return assignees;
                 }
-            }
+            };
         }]);

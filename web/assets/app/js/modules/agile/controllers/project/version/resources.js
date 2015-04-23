@@ -45,13 +45,13 @@ angular.module('agile.controllers')
                     if ($scope.plan.length) {
                         return $scope.plan.length - $scope.plan.buffer - $scope.plan.qaDays;
                     }
-                    return null;
+                    return $scope.plan.devDays;
                 },
                 getQaDays: function () {
                     if ($scope.plan.length) {
                         return $scope.plan.length - $scope.plan.buffer - $scope.plan.devDays;
                     }
-                    return null;
+                    return $scope.plan.qaDays;
                 }
             };
             $scope.userCalc = userCalc;
@@ -78,7 +78,7 @@ angular.module('agile.controllers')
             });
             $scope.$watch('plan.length', function () {
                 $scope.plan.qaDays = planCalc.getQaDays();
-                userCalc.recalculateAll()
+                userCalc.recalculateAll();
             });
             $scope.startDate = dateGetterSetterFactory('startDate');
             $scope.releaseDate = dateGetterSetterFactory('releaseDate');
@@ -86,6 +86,10 @@ angular.module('agile.controllers')
             $scope.save = saveResourcePlan;
             $scope.export = exportResourcePlan;
             $scope.sync = function() {
+                if (!$scope.plan.users.length) {
+                    Helper.setAlert('warning', 'Please import users before.');
+                    return;
+                }
                 synchronize();
                 saveResourcePlan();
             };
@@ -253,10 +257,9 @@ angular.module('agile.controllers')
                 return function(dateString) {
                     if (angular.isDefined(dateString)) {
                         var d = dateString.split('.');
-                        return $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
-                    } else {
-                        return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
+                        $scope.plan[property] = new Date(d[2], d[1] - 1, d[0], 10);
                     }
+                    return dateFormatFilter($scope.plan[property], 'DD.MM.YYYY');
                 };
             }
         }]);

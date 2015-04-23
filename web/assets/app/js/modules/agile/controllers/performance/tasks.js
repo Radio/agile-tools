@@ -88,7 +88,7 @@ angular.module('agile.controllers')
                     factor: (totalEstimatedTime / totalSpentTime).toFixed(2),
                     perTask: perTask,
                     numberOfTasks: perTask.length
-                }
+                };
             }
 
 

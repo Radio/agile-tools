@@ -2,3 +2,6 @@
 vendor/*
 web/assets/bower
 var/cookies
+node_modules
+build
+package

@@ -11,12 +11,12 @@ angular.module('agile.directives')
                 .attr('placeholder', $input.attr('placeholder') + ' ' + placeholderHint)
                 .after($compile(getHintHtml())($scope))
                 .bind('keydown', function(event) {
-                    if (event.keyCode == jQuery.ui.keyCode.ESCAPE || event.keyCode == jQuery.ui.keyCode.ENTER) {
+                    if (event.keyCode == $.ui.keyCode.ESCAPE || event.keyCode == $.ui.keyCode.ENTER) {
                         if ($scope.showHint) {
                             event.preventDefault();
                         }
                         $scope.$apply('showHint = false');
-                    } else if (event.ctrlKey && event.keyCode == jQuery.ui.keyCode.SPACE) {
+                    } else if (event.ctrlKey && event.keyCode == $.ui.keyCode.SPACE) {
                         event.preventDefault();
                         $scope.$apply('showHint = !showHint; isTransparent = false;');
                     } else {

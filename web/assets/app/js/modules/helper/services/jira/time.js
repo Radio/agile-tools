@@ -11,10 +11,10 @@ angular.module('helper')
                             if (timeInfo[section].hasOwnProperty(issueType)) {
                                 // Code Reviews are not accounted into the totals
                                 //  as the estimates are not fixed per issue.
-                                if (issueType == 'dev'
-                                    || issueType == 'doc'
-                                    || issueType == 'tbd'
-                                    || issueType == 'qa') {
+                                if (issueType == 'dev' ||
+                                    issueType == 'doc' ||
+                                    issueType == 'tbd' ||
+                                    issueType == 'qa') {
                                     timeInfo[section].total += timeInfo[section][issueType];
                                 }
                             }
@@ -51,9 +51,9 @@ angular.module('helper')
                                     info.estimated[subTaskType] += subTask.time.aggr.estimated;
                                     info.spent[subTaskType] += subTask.time.aggr.spent;
                                     info.remaining[subTaskType] += subTask.time.aggr.remaining;
-                                    info.overspent[subTaskType] += subTask.time.aggr.spent
-                                        - subTask.time.aggr.estimated
-                                        + subTask.time.aggr.remaining;
+                                    info.overspent[subTaskType] += subTask.time.aggr.spent -
+                                        subTask.time.aggr.estimated +
+                                        subTask.time.aggr.remaining;
                                     break;
                                 case 'cr':
                                     info.spent[subTaskType] += subTask.time.aggr.spent;
@@ -78,5 +78,5 @@ angular.module('helper')
                     calculateTotal(info);
                     return info;
                 }
-            }
+            };
         }]);

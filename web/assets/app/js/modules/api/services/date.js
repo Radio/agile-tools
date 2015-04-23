@@ -3,7 +3,8 @@ angular.module('api')
         return {
             dateStringToObject: function(item, properties) {
                 properties.forEach(function(property) {
-                    if (typeof item[property] == 'object' && typeof item[property].date == 'string') {
+                    if (item[property] && (typeof item[property] == 'object') &&
+                        (typeof item[property].date == 'string')) {
                         try {
                             var dateTime = item[property].date.split(' ');
                             var d = dateTime[0].split('-');
@@ -23,5 +24,5 @@ angular.module('api')
                     }
                 });
             }
-        }
+        };
     });

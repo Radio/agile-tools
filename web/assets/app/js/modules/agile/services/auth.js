@@ -9,12 +9,12 @@ angular.module('agile.services')
 //            };
 //        });
 //    }])
-    .factory('Auth', ['$http', '$location', '$routeSegment', '$window',
-        function($http, $location, $routeSegment, $window) {
+    .factory('Auth',
+        function($http, $location, $routeSegment, $window, Routing) {
         var redirectTo = null;
         var userInfo = {};
-        var loginUrl = $routeSegment.getSegmentUrl('login', {});
-        var startUrl = $routeSegment.getSegmentUrl('projects', {});
+        var loginUrl = Routing.segment('login');
+        var startUrl = Routing.segment('projects');
         return {
             signIn: function(username, password) {
                 var postData = {
@@ -48,7 +48,7 @@ angular.module('agile.services')
                 if (redirectTo) {
                     $location.path(redirectTo);
                 } else {
-                    if ($location.path() == loginUrl) {
+                    if ($location.path() == '/login') {
                         $location.path(startUrl);
                     } else {
                         $window.location.reload();
@@ -61,4 +61,4 @@ angular.module('agile.services')
                 return userInfo;
             }
         };
-    }]);
+    });

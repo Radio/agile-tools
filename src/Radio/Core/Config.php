@@ -24,6 +24,9 @@ class Config
         /** @var \MongoDB $db */
         $db = $this->container['database'];
         $globalConfig = $db->config->findOne(array('_id' => 'global'));
+        if (!$globalConfig) {
+            $globalConfig = [];
+        }
 
         return $globalConfig;
     }
@@ -44,6 +47,9 @@ class Config
         $projectConfig = $db->config->findOne(array(
             '_id' => $projectKey
         ));
+        if (!$projectConfig) {
+            $projectConfig = ['_id' => $projectKey];
+        }
 
         if ($globalConfig) {
             return array_merge($globalConfig, $projectConfig);

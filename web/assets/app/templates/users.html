@@ -18,12 +18,12 @@
         <div class="col-md-3" data-ng-repeat="user in users | filter:searchUser">
             <div class="media condensed-media user-media">
                 <div class="media-left">
-                    <a href="/users/{{ user.key }}">
+                    <a href="users/{{ user.key }}">
                         <img data-ng-src="{{ user.avatar_urls['48x48'] }}" src="" />
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4><a href="/users/{{ user.key }}" class="media-heading">{{ user.name }}</a></h4>
+                    <h4><a href="users/{{ user.key }}" class="media-heading">{{ user.name }}</a></h4>
                     <p data-ng-show="user.type || user.projects.length || 1">
                         {{ user.type || 'Works' }}
                         <span data-ng-show="user.projects.length"> at {{ user.projects.join(' ') }}</span>
@@ -34,7 +34,7 @@
         <div class="col-md-3" data-ng-repeat="user in jiraUsers">
             <div class="media condensed-media user-media jira-user-media">
                 <div class="media-left">
-                    <a href="/users/{{ user.key }}">
+                    <a href="users/{{ user.key }}">
                         <img data-ng-src="{{ user.avatarUrls['48x48'] }}" src="" />
                     </a>
                 </div>

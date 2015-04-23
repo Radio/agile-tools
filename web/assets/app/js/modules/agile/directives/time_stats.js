@@ -24,7 +24,8 @@ angular.module('agile.directives')
                     };
                     if (section == 'overspent') {
                         var estimatedWidth = getSectionWidth('estimated', issueType);
-                        styles.left = ($scope.info.overspent[issueType] > 0 ? estimatedWidth : estimatedWidth - width) + '%'
+                        styles.left = ($scope.info.overspent[issueType] > 0 ?
+                            estimatedWidth : estimatedWidth - width) + '%';
                     }
 
                     return styles;
@@ -45,8 +46,8 @@ angular.module('agile.directives')
                     }
                     return Math.max(
                         $scope.info.spent[issueType] + $scope.info.remaining[issueType],
-                        $scope.info.estimated[issueType]
-                            + ($scope.info.overspent[issueType] > 0 ? $scope.info.overspent[issueType] : 0)
+                        $scope.info.estimated[issueType] +
+                            ($scope.info.overspent[issueType] > 0 ? $scope.info.overspent[issueType] : 0)
                     );
                 }
 

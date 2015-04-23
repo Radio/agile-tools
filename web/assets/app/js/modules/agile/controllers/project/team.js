@@ -20,7 +20,7 @@ angular.module('agile.controllers')
                     return 0;
                 }
                 return $scope.project.users.reduce(function(total, user) {
-                    return (!!user.is_active == is_active) ? total + 1 : total;
+                    return (Boolean(user.is_active) == is_active) ? total + 1 : total;
                 }, 0);
             };
 

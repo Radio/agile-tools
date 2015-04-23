@@ -1,5 +1,16 @@
 <?php
-require_once '../vendor/autoload.php';
+
+$backendRoot = '../';
+
+if (is_readable('preconf.php')) {
+    require 'preconf.php';
+}
+if (!is_writable($backendRoot . 'var')) {
+    header('HTTP/1.0 500 Internal Server Error');
+    die('Var folder is not writable.');
+}
+
+require_once $backendRoot . 'vendor/autoload.php';
 
 use Tonic\Application;
 use Tonic\Response;
