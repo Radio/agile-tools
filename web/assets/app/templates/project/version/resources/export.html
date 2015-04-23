@@ -23,11 +23,11 @@
             </tr>
             <tr data-ng-repeat="user in plan.users | filter:{type:userType.key}">
                 <td>{{ $index + 1 }}. {{ user.name }}</td>
-                <td>{{ user.available }}</td>
-                <td>{{ user.allocated }}</td>
+                <td>{{ user.available | number:2|number}}</td>
+                <td>{{ user.allocated | number:2|number }}</td>
                 <td class="cell-user-diff"
-                    data-ng-class="{'overload': user.diff < 0, 'normal': user.diff > 0}">{{ user.diff }}</td>
-                <td data-ng-hide="hideAdditionalInfo">{{ user.devDaysTotal }}</td>
+                    data-ng-class="{'overload': user.diff < 0, 'normal': user.diff > 0}">{{ user.diff | number:2|number }}</td>
+                <td data-ng-hide="hideAdditionalInfo">{{ user.devDaysTotal | number:2|number }}</td>
                 <td data-ng-hide="hideAdditionalInfo">{{ user.devAmendment }}</td>
                 <td data-ng-hide="hideAdditionalInfo">{{ user.devHoursPerDay }}</td>
                 <td data-ng-hide="hideAdditionalInfo">{{ user.assignment }}</td>
@@ -35,11 +35,11 @@
             </tr>
             <tr class="total-row">
                 <td class="cell-total"><strong>Total ({{ userType.key }})</strong></td>
-                <td><strong>{{ total(userType.key, 'available') }}</strong></td>
-                <td><strong>{{ total(userType.key, 'allocated') }}</strong></td>
+                <td><strong>{{ total(userType.key, 'available') | number:2|number }}</strong></td>
+                <td><strong>{{ total(userType.key, 'allocated') | number:2|number }}</strong></td>
                 <td class="cell-user-diff"
                     data-ng-class="{'overload': total(userType.key, 'diff') < 0, 'normal': total(userType.key, 'diff') > 0}">
-                    <strong>{{ total(userType.key, 'diff') }}</strong>
+                    <strong>{{ total(userType.key, 'diff') | number:2|number }}</strong>
                 </td>
                 <td data-ng-hide="hideAdditionalInfo" colspan="5"></td>
             </tr>

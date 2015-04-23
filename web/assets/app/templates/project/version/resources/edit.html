@@ -71,6 +71,61 @@
         <!--data-ng-click="showSettingsForm = false">Done</button>-->
     </form>
 
+    <div class="alert alert-warning" role="alert" data-ng-if="planningProblems.storiesWithEstimate.length">
+        <p>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            The following stories have direct estimates:
+        </p>
+        <ul>
+            <li data-ng-repeat="problem in planningProblems.storiesWithEstimate">
+                <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ problem.key }}" title="Open in Jira"
+                   target="_blank">{{ problem.key }}</a> {{ problem.summary }}
+                / {{ problem.assignee }}
+                / {{ problem.remaining }}
+            </li>
+        </ul>
+    </div>
+    <div class="alert alert-warning" role="alert" data-ng-if="planningProblems.tasksWithoutEstimate.length">
+        <p>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            The following tasks/sub-tasks have no estimate:
+        </p>
+        <ul>
+            <li data-ng-repeat="problem in planningProblems.tasksWithoutEstimate">
+                <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ problem.key }}" title="Open in Jira"
+                   target="_blank">{{ problem.key }}</a> {{ problem.summary }}
+                / {{ problem.assignee }}
+            </li>
+        </ul>
+    </div>
+    <div class="alert alert-warning" role="alert" data-ng-if="planningProblems.resolvedWithEstimate.length">
+        <p>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            The following resolved issues have remaining estimate:
+        </p>
+        <ul>
+            <li data-ng-repeat="problem in planningProblems.resolvedWithEstimate">
+                <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ problem.key }}" title="Open in Jira"
+                   target="_blank">{{ problem.key }}</a> {{ problem.summary }}
+                / {{ problem.assignee }}
+                / {{ problem.remaining }}
+            </li>
+        </ul>
+    </div>
+    <div class="alert alert-warning" role="alert" data-ng-if="planningProblems.tasksAssignedToChuck.length">
+        <p>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            The following non-qa issues are assigned to Chuck Norris:
+        </p>
+        <ul>
+            <li data-ng-repeat="problem in planningProblems.tasksAssignedToChuck">
+                <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ problem.key }}" title="Open in Jira"
+                   target="_blank">{{ problem.key }}</a> {{ problem.summary }}
+                / {{ problem.remaining }}
+            </li>
+        </ul>
+    </div>
+
     <div class="resources-grid" data-ng-repeat="userType in userTypes">
         <h3>{{ userType.name }}</h3>
         <div class="row grid-header">
@@ -98,11 +153,11 @@
             </div>
             <div class="col-sm-3">
                 <div class="row">
-                    <div class="col-sm-3">{{ user.available }}</div>
-                    <div class="col-sm-3">{{ user.allocated }}</div>
+                    <div class="col-sm-3">{{ user.available | number:2|number }}</div>
+                    <div class="col-sm-3">{{ user.allocated | number:2|number }}</div>
                     <div class="col-sm-3 cell-user-diff"
-                         data-ng-class="{'overload': user.diff < 0, 'normal': user.diff > 0}">{{ user.diff }}</div>
-                    <div class="col-sm-3">{{ user.devDaysTotal }}</div>
+                         data-ng-class="{'overload': user.diff < 0, 'normal': user.diff > 0}">{{ user.diff | number:2|number }}</div>
+                    <div class="col-sm-3">{{ user.devDaysTotal | number:2|number }}</div>
                 </div>
             </div>
             <div class="col-sm-5">
@@ -137,11 +192,11 @@
             </div>
             <div class="col-sm-3">
                 <div class="row">
-                    <div class="col-sm-3"><strong>{{ total(userType.key, 'available') }}</strong></div>
-                    <div class="col-sm-3"><strong>{{ total(userType.key, 'allocated') }}</strong></div>
+                    <div class="col-sm-3"><strong>{{ total(userType.key, 'available') | number:2|number }}</strong></div>
+                    <div class="col-sm-3"><strong>{{ total(userType.key, 'allocated') | number:2|number }}</strong></div>
                     <div class="col-sm-3 cell-user-diff"
                          data-ng-class="{'overload': total(userType.key, 'diff') < 0, 'normal': total(userType.key, 'diff') > 0}">
-                        <strong>{{ total(userType.key, 'diff') }}</strong>
+                        <strong>{{ total(userType.key, 'diff') | number:2|number }}</strong>
                     </div>
                 </div>
             </div>
