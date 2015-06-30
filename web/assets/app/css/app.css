@@ -169,6 +169,12 @@ label {
 .cl-report-row:hover .cell-key .issue-actions-box {
   display: block;
 }
+.cl-report-row:hover .cell-key .issue-actions-box .issue-actions {
+  background-color: #e8e8e8;
+}
+.cl-report-row .updating .cell-key .issue-actions-box {
+  display: block;
+}
 .cl-report-row .cell-key {
   position: relative;
 }
@@ -182,7 +188,7 @@ label {
   display: none;
 }
 .cl-report-row .cell-key .issue-actions-box .issue-actions {
-  background-color: #e8e8e8;
+  background-color: #ffffff;
   width: 100%;
 }
 .cl-report-row .cell-key .issue-actions-box .small-key {
@@ -208,6 +214,7 @@ label {
 }
 .cl-report-row .cl-report-row-col {
   padding-top: 5px;
+  padding-bottom: 5px;
   min-height: 2em;
 }
 .cl-report-row .good .cell-status {
@@ -239,7 +246,7 @@ label {
   text-align: center;
 }
 .cl-report-row .cell-checkboxes .row div {
-  padding: 3px;
+  padding: 0 3px;
   text-align: center;
 }
 .cl-report-row .input-sm {
@@ -249,7 +256,6 @@ label {
   font-size: 14px;
 }
 .cl-report-row .loading-indicator {
-  position: absolute;
   margin-left: 5px;
 }
 .issue-details {
