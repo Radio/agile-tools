@@ -1,5 +1,13 @@
 angular.module('agile.directives')
     .directive('agileAssignees', ['$sce', 'assigneeShortFilter', function($sce, assigneeShortFilter) {
+
+        var unassignedName = 'Unassigned';
+
+        function getDisplayName(name)
+        {
+            return name ? assigneeShortFilter(name) : unassignedName;
+        }
+
         function link($scope, element, attrs) {
             $scope.$watch('assignees', function() {
                 if ($scope.assignees) {
@@ -7,7 +15,7 @@ angular.module('agile.directives')
                     for (var index = 0; index < $scope.assignees.length; index++) {
                         if ('name' in $scope.assignees[index]) {
                             names.push(
-                                '<span class="name">' + assigneeShortFilter($scope.assignees[index].name) + '</span>'
+                                '<span class="name">' + getDisplayName($scope.assignees[index].name) + '</span>'
                             );
                         }
                     }

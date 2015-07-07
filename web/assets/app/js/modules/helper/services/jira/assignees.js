@@ -5,7 +5,7 @@ angular.module('helper')
             return {
                 getStoryAssignees: function(issue) {
                     var assignees = {
-                        devs: [issue.assignee],
+                        devs: [],
                         tbd: {},
                         qa: {}
                     };
@@ -14,22 +14,27 @@ angular.module('helper')
                         for (var i = 0; i < issue.subtasks.length; i++) {
                             var subTask = issue.subtasks[i];
                             if (subTask.assignee && 'name' in subTask.assignee) {
-                                var type = TaskType.get(subTask);
-                                if (type == 'dev' || type == 'inv') {
-                                    if (!devExists(subTask.assignee)) {
-                                        assignees.devs.push(subTask.assignee);
-                                    }
-                                }
-                                if (type == 'tbd') {
-                                    assignees.tbd = subTask.assignee;
-                                }
-                                if (type == 'qa') {
-                                    assignees.qa = subTask.assignee;
-                                }
+                                setAssigneeByType(TaskType.get(subTask), subTask.assignee);
                             }
                         }
-                        if (!assignees.devs.length) {
-                            assignees.devs.push(issue.assignee);
+                    }
+                    // If no developer is assigned in sub-tasks, set the Story assignee as a developer.
+                    if (!assignees.devs.length) {
+                        assignees.devs.push(issue.assignee);
+                    }
+
+                    function setAssigneeByType(type, assignee)
+                    {
+                        if (type == 'dev' || type == 'inv' || type == 'doc') {
+                            if (!devExists(subTask.assignee)) {
+                                assignees.devs.push(subTask.assignee);
+                            }
+                        }
+                        if (type == 'tbd') {
+                            assignees.tbd = subTask.assignee;
+                        }
+                        if (type == 'qa') {
+                            assignees.qa = subTask.assignee;
                         }
                     }
 
