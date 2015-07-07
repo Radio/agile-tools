@@ -181,6 +181,7 @@ label {
         font-size: 13px;
     }
 
+    @normalColor: #fff;
     @hoverColor: #e8e8e8;
     &:hover {
         background: @hoverColor;
@@ -188,6 +189,16 @@ label {
         .issue-time{
             display: inline;
         }
+        .cell-key {
+            .issue-actions-box {
+                display: block;
+                .issue-actions {
+                    background-color: @hoverColor;
+                }
+            }
+        }
+    }
+    .updating {
         .cell-key {
             .issue-actions-box {
                 display: block;
@@ -205,8 +216,7 @@ label {
             height: 100%;
             display: none;
             .issue-actions {
-                background-color: @hoverColor;
-//                padding: 0 15px;
+                background-color: @normalColor;
                 width: 100%;
             }
             .small-key {
@@ -237,6 +247,7 @@ label {
 
     .cl-report-row-col {
         padding-top: 5px;
+        padding-bottom: 5px;
         min-height: 2em;
     }
 
@@ -272,7 +283,7 @@ label {
     .cell-checkboxes {
         .row {
             div {
-                padding: 3px;
+                padding: 0 3px;
                 text-align: center;
             }
         }
@@ -285,7 +296,6 @@ label {
         font-size: 14px;
     }
     .loading-indicator {
-        position: absolute;
         margin-left: 5px;
     }
 }
