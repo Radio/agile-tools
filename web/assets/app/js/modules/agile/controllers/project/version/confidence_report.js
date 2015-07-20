@@ -113,7 +113,9 @@ angular.module('agile.controllers')
                 }
             }
 
-
+            /**
+             * todo: maybe run a custom bulk update. Merge with general update. Strategy should be the same.
+             */
             function updateIssue(issueInfo) {
                 var deferred = $q.defer();
                 Api.get('IssuesImport').post({
@@ -122,7 +124,15 @@ angular.module('agile.controllers')
                     Helper.setAlert('success', response.message);
                     $scope.loadConfidenceReport(true).then(function() {
 
+                        /*
+                         Todo: improve reloading after updating the issue.
+                         If any other issue is being syncing now, skip instant updating and
+                         CR reloading. Push the deferred/issue-key in queue instead.
+                         After the last sync reload the CR, update all queued issues and save the CR.
+                         */
+
                         var issueIndex = -1;
+                        // todo: move to function.
                         for (var index = 0; index < $scope.confidenceReport.issues.length; index++) {
                             if ($scope.confidenceReport.issues[index].key == issueInfo.key) {
                                 issueIndex = index;
@@ -259,6 +269,9 @@ angular.module('agile.controllers')
                 }
             }
 
+            /**
+             * todo: move to directive.
+             */
             function fillSortedIssues()
             {
                 $scope.sortedIssues = {
@@ -282,6 +295,9 @@ angular.module('agile.controllers')
                 }
             }
 
+            /**
+             * todo: move to directive.
+             */
             function getSortingOptions()
             {
                 return {
@@ -309,6 +325,9 @@ angular.module('agile.controllers')
                 };
             }
 
+            /**
+             * todo: move to directive.
+             */
             function applySorting()
             {
                 var i, issues = [];
