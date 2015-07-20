@@ -1,25 +1,34 @@
 module.exports = {
 
-    base: '/build/',
+    base: "/build/",
 
-    webDir: 'web',
-    buildDir: 'build',
-    packageDir: 'package',
-    backendDir: 'src',
-    vendorDir: 'vendor',
-    buildBackendDir: 'backend',
+    webDir: "web",
+    backendDir: "backend",
+
+    buildDir: "build",
+    buildBackendDir: "backend",
+
+    packageDir: "package",
+
+    backendFiles: {
+        php: [
+            "<%= backendDir %>/src/**/*",
+            "<%= backendDir %>/vendor/**/*",
+            "<%= backendDir %>/conf/*"
+        ]
+    },
     webFiles: {
-        php: ['*.php'],
-        js: ['assets/app/**/*.js'],
-        apache: ['.htaccess'],
-        images: ['assets/app/img/**/*'],
-        html: ['assets/app/templates/index.html']
+        php: ["*.php"],
+        js: ["assets/app/**/*.js"],
+        apache: [".htaccess"],
+        images: ["assets/app/img/**/*"],
+        html: ["assets/app/templates/index.html"]
     },
 
     tpl: {
-        files: '<%= webDir %>/assets/app/templates/**/*.html',
-        jsFile: '<%= buildDir %>/assets/app/js/modules/templates.js',
-        moduleName: 'templates'
+        files: "<%= webDir %>/assets/app/templates/**/*.html",
+        jsFile: "<%= buildDir %>/assets/app/js/modules/templates.js",
+        moduleName: "templates"
     },
 
     vendor: {
@@ -42,18 +51,18 @@ module.exports = {
                 "assets/bower/angular-ui-sortable/sortable.js"
             ],
             css: [
-                'assets/bower/bootstrap/dist/css/bootstrap.min.css',
-                'assets/bower/pace/themes/blue/pace-theme-minimal.css'
+                "assets/bower/bootstrap/dist/css/bootstrap.min.css",
+                "assets/bower/pace/themes/blue/pace-theme-minimal.css"
             ],
             map: [
-                'assets/bower/jquery/dist/jquery.min.map',
-                'assets/bower/angular/angular.min.js.map',
-                'assets/bower/angular-route/angular-route.min.js.map',
-                'assets/bower/angular-resource/angular-resource.min.js.map',
-                'assets/bower/angular-sanitize/angular-sanitize.min.js.map'
+                "assets/bower/jquery/dist/jquery.min.map",
+                "assets/bower/angular/angular.min.js.map",
+                "assets/bower/angular-route/angular-route.min.js.map",
+                "assets/bower/angular-resource/angular-resource.min.js.map",
+                "assets/bower/angular-sanitize/angular-sanitize.min.js.map"
             ],
             fonts: [
-                'assets/bower/bootstrap/dist/fonts/glyphicons-halflings-regular.*'
+                "assets/bower/bootstrap/dist/fonts/glyphicons-halflings-regular.*"
             ]
         }
     }

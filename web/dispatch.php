@@ -1,6 +1,6 @@
 <?php
 
-$backendRoot = '../';
+$backendRoot = '../backend/';
 
 if (is_readable('preconf.php')) {
     require 'preconf.php';

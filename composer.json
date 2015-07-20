@@ -1,6 +1,9 @@
 {
+    "config": {
+        "vendor-dir": "backend/vendor"
+    },
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "": "backend/src" }
     },
     "require": {
         "peej/tonic": "dev-master",

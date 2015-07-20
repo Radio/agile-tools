@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "79c31e5d09afcfa46a16f37f68c7914a",
+    "hash": "e7bbeef794ab7bfd86a324551541cc3c",
     "packages": [
         {
             "name": "chobie/jira-api-restclient",
@@ -62,12 +62,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/peej/tonic.git",
-                "reference": "7589f49abc0f6c2a482978e0d7108bc7ba273543"
+                "reference": "673f5deb2c32f7175431af17c5f25b834ac78a69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/peej/tonic/zipball/7589f49abc0f6c2a482978e0d7108bc7ba273543",
-                "reference": "7589f49abc0f6c2a482978e0d7108bc7ba273543",
+                "url": "https://api.github.com/repos/peej/tonic/zipball/673f5deb2c32f7175431af17c5f25b834ac78a69",
+                "reference": "673f5deb2c32f7175431af17c5f25b834ac78a69",
                 "shasum": ""
             },
             "require": {
@@ -75,8 +75,9 @@
             },
             "require-dev": {
                 "behat/behat": "2.*",
+                "henrikbjorn/phpspec-code-coverage": "1.*@dev",
                 "peej/phpdoctor": "dev-master",
-                "phpspec/phpspec": "1.*"
+                "phpspec/phpspec": "2.0.*@dev"
             },
             "suggest": {
                 "pimple/pimple": "A simple dependancy injection container to handle your services",
@@ -88,7 +89,8 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "Tonic": "src/"
+                    "Tonic": "src/",
+                    "Tyrell": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -107,20 +109,20 @@
                 "microframework",
                 "rest"
             ],
-            "time": "2014-02-06 15:15:44"
+            "time": "2015-06-23 19:58:06"
         },
         {
             "name": "pimple/pimple",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fabpot/Pimple.git",
-                "reference": "3764c3985684ad6af4ad3c7d2e0595f9f09faf5f"
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "976f9b385ff8e850e967ba6dd99071df11488f17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/3764c3985684ad6af4ad3c7d2e0595f9f09faf5f",
-                "reference": "3764c3985684ad6af4ad3c7d2e0595f9f09faf5f",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/976f9b385ff8e850e967ba6dd99071df11488f17",
+                "reference": "976f9b385ff8e850e967ba6dd99071df11488f17",
                 "shasum": ""
             },
             "require": {
@@ -153,7 +155,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2014-07-29 17:32:26"
+            "time": "2015-05-29 22:13:37"
         },
         {
             "name": "symfony/yaml",
@@ -171,7 +173,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.5.9"
             },
             "type": "library",
             "extra": {
@@ -203,12 +205,8 @@
             "time": "2014-08-05 09:07:51"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "peej/tonic": 20,
@@ -217,10 +215,7 @@
         "chobie/jira-api-restclient": 20
     },
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
 }

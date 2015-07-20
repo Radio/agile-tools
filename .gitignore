@@ -1,7 +1,7 @@
 .idea/workspace.xml
-vendor/*
+backend/vendor/*
+backend/var/cookies
 web/assets/bower
-var/cookies
 node_modules
 build
 package
