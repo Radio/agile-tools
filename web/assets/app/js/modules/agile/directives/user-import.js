@@ -48,10 +48,10 @@ angular.module('agile.directives')
                         $scope.showImportLoader = true;
 
                         Api.get('UsersImport').post({
-                            key: jiraUser.key
+                            name: jiraUser.name
                         }).then(function(response) {
                             Helper.setAlert('success', response.message);
-                            Api.get('User').get(jiraUser.key)
+                            Api.get('User').get(jiraUser.name)
                                 .then(function(user) {
                                     $scope.callback(user);
                                     $scope.hideImportForm();

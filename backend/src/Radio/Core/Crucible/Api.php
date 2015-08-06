@@ -13,7 +13,39 @@ class Crucible_Api extends Api
 
     public function getReviewsForIssue($issuesKey)
     {
-        $result = $this->api(self::REQUEST_GET, '/rest-service/search-v1/reviews.json', array('term' => $issuesKey));
+        $result = $this->api(
+            self::REQUEST_GET,
+            '/rest-service/search-v1/reviews.json',
+            array(
+                'term' => $issuesKey
+            )
+        );
+
+        return $result;
+    }
+
+    public function getReviewsByAuthor($username)
+    {
+        return $this->getReviewsFiltered(array('author' => $username));
+    }
+
+    public function getReviewsFiltered($filter = array())
+    {
+        $result = $this->api(
+            self::REQUEST_GET,
+            '/rest-service/reviews-v1/filter.json',
+            $filter
+        );
+
+        return $result;
+    }
+
+    public function getReviewDetails($reviewPermId)
+    {
+        $result = $this->api(
+            self::REQUEST_GET,
+            sprintf('/rest-service/reviews-v1/%s/details.json', $reviewPermId)
+        );
 
         return $result;
     }

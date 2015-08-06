@@ -1,6 +1,10 @@
 angular.module('agile.controllers')
     .controller('Users', function($scope, Api, Helper) {
 
+        /**
+         * @deprecated.
+         */
+
         Helper.setTitle('Users');
 
         loadUsers();
@@ -39,7 +43,7 @@ angular.module('agile.controllers')
         function userExists(user)
         {
             for (var i = 0; i < $scope.users.length; i++) {
-                if ($scope.users[i].key == user.key) {
+                if ($scope.users[i].name == user.name) {
                     return true;
                 }
             }
@@ -49,7 +53,7 @@ angular.module('agile.controllers')
         function addUser(user)
         {
             return Api.get('UsersImport').post({
-                key: user.key
+                name: user.name
             }).then(function(response) {
                 Helper.setAlert('success', response.message);
                 Api.get('Users').resetCache();

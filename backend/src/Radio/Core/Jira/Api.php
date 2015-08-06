@@ -13,13 +13,13 @@ class Jira_Api extends Api
      *
      * @api /rest/api/2/user?username={userKey}
      *
-     * @param string $userKey User Key.
+     * @param string $userName User Name.
      *
      * @return array
      */
-    public function getUser($userKey)
+    public function getUser($userName)
     {
-        $result = $this->api(self::REQUEST_GET, '/rest/api/2/user/', array('username' => $userKey), true);
+        $result = $this->api(self::REQUEST_GET, '/rest/api/2/user/', array('username' => $userName), true);
 
         return $result;
     }

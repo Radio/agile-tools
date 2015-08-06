@@ -32,7 +32,7 @@ angular.module('agile.controllers')
             function removeUserFromProject(user)
             {
                 if (confirm('Are you sure?')) {
-                    var index = projectHasUser(user.key);
+                    var index = projectHasUser(user.name);
                     if (index) {
                         $scope.project.users.splice(index - 1, 1);
                     }
@@ -44,9 +44,9 @@ angular.module('agile.controllers')
                 if (!$scope.project.users) {
                     $scope.project.users = [];
                 }
-                if (!projectHasUser(user.key)) {
+                if (!projectHasUser(user.name)) {
                     $scope.project.users.push({
-                        key: user.key,
+                        key: user.name,
                         name: user.name,
                         assignment: 1,
                         ratio: 1,
@@ -56,10 +56,10 @@ angular.module('agile.controllers')
                 }
             }
 
-            function projectHasUser(userKey)
+            function projectHasUser(userName)
             {
                 for (var i = 0; i < $scope.project.users.length; i++) {
-                    if ($scope.project.users[i].key == userKey) {
+                    if ($scope.project.users[i].name == userName) {
                         return i + 1;
                     }
                 }

@@ -20,10 +20,10 @@ class Api_Users_Import extends Core\Resource
     {
         $requestData = $this->request->getDecodedData();
 
-        if (isset($requestData['key'])) {
+        if (isset($requestData['name'])) {
             /** @var Core\Jira_Api $jiraApi */
             $jiraApi = $this->app->container['jira.api'];
-            $jiraUser = $jiraApi->getUser($requestData['key']);
+            $jiraUser = $jiraApi->getUser($requestData['name']);
 
             $adapter = new Adapters\Jira_User($jiraUser);
             $user = $adapter->getAdaptation();
