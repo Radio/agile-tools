@@ -226,6 +226,9 @@ label {
 .cl-report-row .bad .cell-status {
   color: #ff2f31;
 }
+.cl-report-row .neutral .cell-status {
+  color: #737373;
+}
 .cl-report-row .wrong-version {
   background-color: rgba(255, 47, 49, 0.15);
 }
@@ -358,6 +361,9 @@ label {
 }
 .export-table .cl-report-row.bad {
   background-color: #ffd1cf;
+}
+.export-table .cl-report-row.neutral {
+  background-color: #f5f5f5;
 }
 .export-table .cl-report-row .cell-status {
   color: #333;

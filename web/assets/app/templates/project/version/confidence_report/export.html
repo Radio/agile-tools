@@ -36,7 +36,7 @@
             <tr class="cl-report-row export-row"
                  data-ng-repeat="issueInfo in confidenceReport.issues | filter:{export:true}"
                  data-ng-init="cl = issueInfo.cl - 0"
-                 data-ng-class="{good: cl > 6, 'so-so': cl > 3 && cl <= 6, 'bad': cl <= 3}">
+                 data-ng-class="{good: cl > 6, 'so-so': cl > 3 && cl <= 6, 'bad': cl <= 3 && cl > 0, 'neutral': cl == 0}">
                 <td class="cell-key">
                     <a href="{{ config.value('jira_url', 'yaml') }}/browse/{{ issueInfo.key }}" target="_blank">
                         {{ issueInfo.key }}

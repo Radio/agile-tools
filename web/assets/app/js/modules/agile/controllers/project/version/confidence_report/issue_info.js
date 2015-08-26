@@ -29,7 +29,8 @@ angular.module('agile.controllers')
                 return {
                     'good': $scope.issueInfo.cl > 6,
                     'so-so': $scope.issueInfo.cl <= 6 && $scope.issueInfo.cl > 3,
-                    'bad': $scope.issueInfo.cl <= 3 || !$scope.issueInfo.cl,
+                    'bad': $scope.issueInfo.cl <= 3,
+                    'neutral': !$scope.issueInfo.cl,
                     'updating': $scope.issueIsUpdating,
                     'wrong-version': !checkIssueVersion()
                 };
