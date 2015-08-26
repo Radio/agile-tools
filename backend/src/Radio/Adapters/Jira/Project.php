@@ -15,7 +15,6 @@ class Jira_Project extends Adapter
             'name' => $this->original['name'],
             'avatar_urls' => $this->original['avatarUrls'],
             'versions' => array(),
-            'users' => array(),
         );
         if (isset($this->original['versions'])) {
 
