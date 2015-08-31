@@ -72,23 +72,8 @@ angular.module('agile.controllers')
                         }
                     });
                     if (importKeys.length) {
-                        $scope.$parent.saveConfidenceReport().then(function() {
-                            Api.get('IssuesImport').post({
-                                keys: importKeys
-                            }).then(function(response) {
-                                Helper.setAlert('success', response.message);
-                                $scope.$parent.loadConfidenceReport().then(function() {
-
-                                    $scope.$emit('confidenceReportIssuesUpdated');
-
-                                    $scope.saveConfidenceReport();
-
-                                    $scope.$emit('confidenceReportChanged');
-
-                                    $scope.hideImportForm();
-                                    Helper.setAlert('success', 'Issues state has been updated.');
-                                });
-                            });
+                        $scope.$parent.updateIssues(importKeys).then(function() {
+                            $scope.hideImportForm();
                         });
                     } else {
                         $scope.hideImportForm();

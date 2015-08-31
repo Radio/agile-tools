@@ -1,14 +1,15 @@
 angular.module('agile.controllers')
-    .controller('Version_ConfidenceReport_IssueInfo', ['$scope', 'TEMPLATES_URL', 'Api', 'Helper', 'JiraHelper',
-        function($scope, TEMPLATES_URL, Api, Helper, JiraHelper) {
+    .controller('Version_ConfidenceReport_IssueInfo',
+        function($scope, TEMPLATES_URL, Api, Helper, JiraHelper_Version) {
             $scope.template = TEMPLATES_URL + '/project/version/confidence_report/edit/issue_info.html';
 
             $scope.issueIsUpdating = false;
 
             $scope.updateIssue = function() {
                 $scope.issueIsUpdating = true;
-                $scope.$parent.updateIssue($scope.issueInfo).then(function() {
+                $scope.$parent.updateIssues([$scope.issueInfo.key]).then(function() {
                     $scope.issueIsUpdating = false;
+                    Helper.setAlert('success', 'Issue has been updated.');
                 }, function() {
                     $scope.issueIsUpdating = false;
                 });
@@ -31,8 +32,8 @@ angular.module('agile.controllers')
                     'so-so': $scope.issueInfo.cl <= 6 && $scope.issueInfo.cl > 3,
                     'bad': $scope.issueInfo.cl <= 3,
                     'neutral': !$scope.issueInfo.cl,
-                    'updating': $scope.issueIsUpdating,
-                    'wrong-version': !checkIssueVersion()
+                    'updating': $scope.issueIsUpdating || $scope.showUpdateLoader,
+                    'wrong-version': !JiraHelper_Version.isInVersion($scope.issueInfo.issue, $scope.version)
                 };
             };
 
@@ -40,19 +41,4 @@ angular.module('agile.controllers')
             {
                 return key.replace(/^.+?-/, '');
             };
-
-            function checkIssueVersion()
-            {
-                if (!$scope.issueInfo.issue) {
-                    return true;
-                }
-                if ($scope.issueInfo.issue.versions) {
-                    for (var i = 0; i < $scope.issueInfo.issue.versions.length; i++) {
-                        if ($scope.issueInfo.issue.versions[i].id == $scope.version.jira_id) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-        }]);
+        });

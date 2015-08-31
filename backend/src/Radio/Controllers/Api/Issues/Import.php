@@ -189,7 +189,8 @@ class Api_Issues_Import extends Core\Resource
             ['$set' => [
                 'subtasks.$.assignee' => $issue['assignee'],
                 'subtasks.$.time' => $issue['time'],
-                'subtasks.$.issuetype.custom' => $issue['issuetype']['custom']
+                'subtasks.$.issuetype.custom' => $issue['issuetype']['custom'],
+                'subtasks.$.versions' => $issue['versions']
             ]]
         );
     }

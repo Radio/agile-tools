@@ -202,6 +202,13 @@ label {
         .cell-key {
             .issue-actions-box {
                 display: block;
+
+                .issue-action {
+                    display: none;
+                }
+                .loading-indicator {
+                    display: block;
+                }
             }
         }
     }
@@ -301,6 +308,7 @@ label {
     }
     .loading-indicator {
         margin-left: 5px;
+        display: none;
     }
 }
 .issue-details {
@@ -739,5 +747,25 @@ label {
         #iteration {
 //            width: 40px;
         }
+    }
+}
+.version-settings-form {
+    margin: 15px 0 30px;
+
+    .form-group {
+        margin-right: 20px;
+    }
+    label {
+        font-weight: bold;
+        width: 150px;
+        text-align: right;
+    }
+    .date-input {
+        //            width: 75px;
+        //            padding-left: 5px;
+        //            padding-right: 5px;
+    }
+    #iteration {
+        //            width: 40px;
     }
 }

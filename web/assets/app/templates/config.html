@@ -22,6 +22,16 @@
                     <textarea class="form-control yaml-textarea" rows="10"
                               data-ng-model="yamlConfig"></textarea>
                 </div>
+                <h5>Possible options</h5>
+                <p>
+                    <strong>project_name</strong> — Custom project name. Name from Jira will be used if not set.<br/>
+                    <strong>project_manager</strong> — Default project manager. Used in Iteration Plan.<br/>
+                    <strong>approve_by</strong> — Default approver. Used in Iteration Plan.<br/>
+                    <strong>daily_hours</strong> — Daily durability in hours. Used in Capacity calculation.<br/>
+                    <strong>cr_hours</strong> — Code review durability in hours. Used in Capacity calculation.<br/>
+                    <strong>dev_days</strong> — Default amount of development days. Used in Capacity calculation.<br/>
+                    <strong>import_reviews</strong> — If set to "true" reviews will be imported from Fecru.<br/>
+                </p>
 
                 <div data-ng-if="config.config._id != 'global'">
                     <h4>Custom CSS</h4>

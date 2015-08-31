@@ -1,8 +1,50 @@
 <div class="page-header">
     <h1><a href="project/{{ project.key }}">{{ config.value('project_name') || project.name }}</a> / {{ ::version.name }}</h1>
+    <!--<span class="a version-settings-button" data-ng-click="showSettingsForm=!showSettingsForm">Settings</span>-->
     <div data-ng-show="alert.message" role="alert"
          class="alert alert-{{alert.type}}">{{alert.message}}</div>
 </div>
+<form class="form-inline version-settings-form" role="form" data-ng-show="showSettingsForm">
+    <div class="form-group">
+        <label for="startDate">Planning:</label>
+        <input class="form-control input-sm date-input" id="startDate" placeholder="dd.mm.yyyy"
+               data-ng-model="startDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+    </div>
+    <div class="form-group">
+        <label for="freezeDate">Feature-freeze:</label>
+        <input class="form-control input-sm date-input" id="freezeDate" placeholder="dd.mm.yyyy"
+               data-ng-model="freezeDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+    </div>
+    <div class="form-group">
+        <label for="endDate">Release:</label>
+        <input class="form-control input-sm date-input" id="releaseDate" placeholder="dd.mm.yyyy"
+               data-ng-model="releaseDate" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+    </div>
+    <br/><br/>
+    <div class="form-group">
+        <label for="projectName">Project Name:</label>
+        <input class="form-control input-sm" id="projectName" data-ng-model="plan.projectName">
+    </div>
+    <div class="form-group">
+        <label for="projectManager">Project Manager:</label>
+        <input class="form-control input-sm" id="projectManager" data-ng-model="plan.projectManager">
+    </div>
+    <div class="form-group">
+        <label for="iteration">Iteration:</label>
+        <input class="form-control input-sm" id="iteration" placeholder="#" data-ng-model="plan.iteration">
+    </div>
+    <br/><br/>
+    <div class="form-group">
+        <label for="approveBy">Approve By:</label>
+        <input class="form-control input-sm" id="approveBy" data-ng-model="plan.approveBy">
+    </div>
+    <div class="form-group">
+        <label for="approveTill">Approval Till:</label>
+        <input class="form-control input-sm date-input" id="approveTill" placeholder="dd.mm.yyyy"
+               data-ng-model="approveTill" data-ng-model-options="{updateOn: 'blur', getterSetter: true}">
+    </div>
+    <hr/>
+</form>
 <div class="version-dates pull-right">
     <span data-ng-if="version.startDate">
         <span class="date" title="Start Date">{{ ::version.startDate | dateFormat:'MMM,[&nbsp;]DD' }}</span>
@@ -18,6 +60,9 @@
 <ul class="nav nav-pills" role="tablist">
     <li data-ng-class="getTabClass('confidence_report')">
         <a href="project/{{ ::project.key }}/version/{{ ::version.name }}/confidence_report">Confidence Report</a>
+    </li>
+    <li data-ng-class="getTabClass('timeline')">
+        <a href="project/{{ ::project.key }}/version/{{ ::version.name }}/timeline">Timeline</a>
     </li>
     <li data-ng-class="getTabClass('resources')">
         <a href="project/{{ ::project.key }}/version/{{ ::version.name }}/resources">Resources</a>

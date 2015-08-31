@@ -175,6 +175,12 @@ label {
 .cl-report-row .updating .cell-key .issue-actions-box {
   display: block;
 }
+.cl-report-row .updating .cell-key .issue-actions-box .issue-action {
+  display: none;
+}
+.cl-report-row .updating .cell-key .issue-actions-box .loading-indicator {
+  display: block;
+}
 .cl-report-row .cell-key {
   position: relative;
 }
@@ -260,6 +266,7 @@ label {
 }
 .cl-report-row .loading-indicator {
   margin-left: 5px;
+  display: none;
 }
 .issue-details {
   padding-bottom: 10px;
@@ -616,6 +623,17 @@ label {
   margin-right: 20px;
 }
 .commitment-container .settings-form label {
+  font-weight: bold;
+  width: 150px;
+  text-align: right;
+}
+.version-settings-form {
+  margin: 15px 0 30px;
+}
+.version-settings-form .form-group {
+  margin-right: 20px;
+}
+.version-settings-form label {
   font-weight: bold;
   width: 150px;
   text-align: right;

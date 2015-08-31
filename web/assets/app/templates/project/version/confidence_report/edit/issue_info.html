@@ -12,18 +12,14 @@
                                target="_blank">{{ getSmallKey(issueInfo.key) }}</a>
                         </span>
                         <div class="issue-actions">
-                            <span class="loading-indicator" title="Please wait..."
-                                  data-ng-show="issueIsUpdating"></span>
+                            <span class="loading-indicator" title="Please wait..."></span>
                             <span class="issue-action clickable glyphicon glyphicon-repeat" title="Update issue"
-                                  data-ng-click="updateIssue()"
-                                  data-ng-hide="issueIsUpdating"></span>
+                                  data-ng-click="updateIssue()"></span>
                             <span class="issue-action clickable glyphicon glyphicon-compressed text-warning" title="Archive issue"
                                   data-ng-if="!issueInfo.archived"
-                                  data-ng-click="archiveIssue()"
-                                  data-ng-hide="issueIsUpdating"></span>
+                                  data-ng-click="archiveIssue()"></span>
                             <span class="issue-action clickable glyphicon glyphicon-remove text-danger" title="Remove issue"
-                                  data-ng-click="removeIssue()"
-                                  data-ng-hide="issueIsUpdating"></span>
+                                  data-ng-click="removeIssue()"></span>
                         </div>
                     </div>
                 </div>

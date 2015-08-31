@@ -23,6 +23,7 @@ class Jira_Issue_Subtask extends Adapter
                 'id' => $this->original['fields']['status']['id'],
                 'name' => $this->original['fields']['status']['name'],
             ),
+            'versions' => array(),
         );
 
         $this->adapted = $subtask;
