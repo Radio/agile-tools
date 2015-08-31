@@ -1,0 +1,36 @@
+diff --git a/backend/src/Radio/Controllers/Login.php b/backend/src/Radio/Controllers/Login.php
+index 0be561d..9785826 100644
+--- a/backend/src/Radio/Controllers/Login.php
++++ b/backend/src/Radio/Controllers/Login.php
+@@ -30,7 +30,8 @@ class Login extends Resource
+      */
+     public function authorize()
+     {
+-        $authorizedName = $this->checkJiraAuthorization();
++//        $authorizedName = $this->checkJiraAuthorization();
++        $authorizedName = 'Debug';
+         if ($authorizedName) {
+             return new JsonResponse(Response::OK, [
+                 'message' => 'Already authorized as ' . $authorizedName
+@@ -40,7 +41,6 @@ class Login extends Resource
+         $postData = $this->request->getDecodedData();
+         try {
+             $authorizedName = $this->authorizeInJira($postData['username'], $postData['password']);
+-
+             try {
+                 $crucibleName = $this->authorizeInCrucible($postData['username'], $postData['password']);
+             } catch (UnauthorizedException $exception) {
+diff --git a/backend/src/Radio/Controllers/Login/Check.php b/backend/src/Radio/Controllers/Login/Check.php
+index 7d0f140..f27fab0 100644
+--- a/backend/src/Radio/Controllers/Login/Check.php
++++ b/backend/src/Radio/Controllers/Login/Check.php
+@@ -24,7 +24,8 @@ class Login_Check extends Resource
+         $api = $this->app->container['jira.api'];
+ 
+         try {
+-            $user = $api->checkAuthorization();
++//            $user = $api->checkAuthorization();
++            $user = ['name'=>'Debug'];
+             return new JsonResponse(Response::OK, [
+                 'message' => 'Already authorized as ' . $user['name'],
+                 'user' => $user
