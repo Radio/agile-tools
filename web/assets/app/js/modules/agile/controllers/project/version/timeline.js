@@ -19,7 +19,7 @@ angular.module('agile.controllers')
 
             function loadConfidenceReport() {
                 return ConfidenceReportService
-                    .load(getEntityKey($scope.project, $scope.version), ['issues'])
+                    .load(getEntityKey($scope.project, $scope.version), ['issues']);
             }
 
 

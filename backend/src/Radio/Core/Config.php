@@ -25,7 +25,7 @@ class Config
         $db = $this->container['database'];
         $globalConfig = $db->config->findOne(array('_id' => 'global'));
         if (!$globalConfig) {
-            $globalConfig = [];
+            $globalConfig = ['_id' => 'global'];
         }
 
         return $globalConfig;

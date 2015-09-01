@@ -23,8 +23,8 @@ angular.module('agile.services')
         };
 
         function issueIsRelevant(issue, version) {
-            return JiraHelper_Version.isInVersion(issue, version)
-                && issue.time.aggr.estimated;
+            return JiraHelper_Version.isInVersion(issue, version) &&
+                issue.time.aggr.estimated;
         }
 
     });

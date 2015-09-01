@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             backend: {
                 files: [{
                     src: ["<%= backendFiles.php %>"],
-                    dest: "<%= buildDir %>/<%= buildBackendDir %>",
+                    dest: "<%= buildDir %>",
                     cwd: ".",
                     expand: true
                 }]

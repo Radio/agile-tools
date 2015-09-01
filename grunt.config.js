@@ -1,6 +1,6 @@
 module.exports = {
 
-    base: "/build/",
+    base: "/agile/",
 
     webDir: "web",
     backendDir: "backend",
