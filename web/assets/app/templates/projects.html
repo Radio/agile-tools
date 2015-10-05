@@ -1,7 +1,10 @@
 <div class="page-header">
     <div class="projects-header">
         <h1>Projects</h1>
-        <p>Already imported ones</p>
+        <p>
+            Already imported ones.
+            <a class="btn btn-sm btn-info" href="start">Start new</a>
+        </p>
     </div>
     <div data-ng-show="alert.message" role="alert"
          class="alert alert-{{alert.type}}">{{alert.message}}</div>
@@ -9,12 +12,9 @@
 <div class="row filter-row">
     <div class="col-sm-3">
         <div class="filter-holder">
-            <input type="search" class="form-control input-sm" placeholder="Filter projects"
+            <input type="search" class="form-control input-sm" placeholder="Filter project"
                    data-ng-model="searchProject">
         </div>
-    </div>
-    <div class="col-sm-3">
-        <a class="btn btn-sm btn-success" href="start">Start new</a>
     </div>
 </div>
 <div class="projects-page">

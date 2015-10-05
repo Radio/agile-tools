@@ -97,6 +97,8 @@ angular.module('helper')
                 } else if (issueState.impl == 1 || issueState.impl == -1) {
                     if (issueState.doc == 0 || issueState.doc == 2) {
                         issueState.status = 'Doc';
+//                    } else if (issueState.cr == 0 || issueState.cr == 2) {
+//                        issueState.status = 'In CR';
                     } else if (issueState.tbd == 0 || issueState.tbd == 2) {
                         issueState.status = 'In TBD';
                     } else if (issueState.qa == 0 || issueState.qa == 2) {

@@ -7,6 +7,6 @@ angular.module('agile.controllers')
             $scope.info = {};
 
             $scope.init = function(issueInfo) {
-                $scope.info = JiraHelper.getDetailedIssueTimeInfo(issueInfo.issue);
+                $scope.info = JiraHelper.getDetailedIssueTimeInfo(issueInfo.issue, $scope.version);
             };
         }]);

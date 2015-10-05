@@ -17,7 +17,7 @@ angular.module('agile.controllers')
                 var totalTimeInfo = {};
                 if ($scope.confidenceReport) {
                     angular.forEach($scope.confidenceReport.issues, function(issueInfo) {
-                        var timeInfo = JiraHelper.getDetailedIssueTimeInfo(issueInfo.issue);
+                        var timeInfo = JiraHelper.getDetailedIssueTimeInfo(issueInfo.issue, $scope.version);
                         totalTimeInfo = appendTimeInfo(timeInfo, totalTimeInfo);
                     });
                 }

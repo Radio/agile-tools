@@ -61,7 +61,10 @@
         </div>
         <div class="cell col-sm-1 cell-status">
             <span class="issue-status" title="{{ issueInfo.status }}"
-                    data-ng-class="{'warning': issueInfo.status == 'In QA' && !issueInfo.qa_assigned}">{{ issueInfo.status }}</span>
+                    data-ng-class="{'warning': issueInfo.status == 'In QA' && !issueInfo.qa_assigned}">{{ issueInfo.status }}
+                <sup class="cr-sup" title="Code Review is open"
+                     data-ng-if="['In TBD', 'In QA', 'Resolved'].indexOf(issueInfo.status) > -1 && [0, 2].indexOf(issueInfo.cr) > -1">CR</sup>
+            </span>
         </div>
         <div class="col-sm-3">
             <div class="row">

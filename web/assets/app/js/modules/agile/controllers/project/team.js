@@ -46,7 +46,7 @@ angular.module('agile.controllers')
                 }
                 if (!projectHasUser(user.name)) {
                     $scope.project.users.push({
-                        key: user.name,
+                        key: user.key,
                         name: user.name,
                         assignment: 1,
                         ratio: 1,

@@ -345,6 +345,9 @@ label {
   color: red;
   font-weight: bold;
 }
+.cell-status .issue-status .cr-sup {
+  color: red;
+}
 .cell-key {
   white-space: nowrap;
 }
