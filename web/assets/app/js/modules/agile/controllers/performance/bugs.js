@@ -26,7 +26,7 @@ angular.module('agile.controllers')
 
             function loadBugs()
             {
-                if (!$scope.user) {
+                if (!$scope.statsUser) {
                     throw {
                         message: "User is not loaded yet."
                     };
@@ -34,7 +34,7 @@ angular.module('agile.controllers')
 
                 var jql = 'issuetype = "Bug Report" AND status in (Resolved, Closed) ' +
                     ' AND created <= "' + dateFormatFilter('now', 'YYYY-MM-DD') + '"' + // this is to cache bugs per day
-                    ' AND Teilnehmer = ' + $scope.user.key;
+                    ' AND Participants in (' + $scope.statsUser.key + ')';
                 if ($scope.filters.project) {
                     jql += ' AND project = ' + $scope.filters.project.key;
                 }
@@ -61,7 +61,7 @@ angular.module('agile.controllers')
                     try {
                         for (var j = 0; j < bugs[i].fields.worklog.worklogs.length; j++) {
                             var worklog = bugs[i].fields.worklog.worklogs[j];
-                            if (worklog.author.name == $scope.user.key) {
+                            if (worklog.author.name == $scope.statsUser.key) {
                                 timespent += worklog.timeSpentSeconds;
                             }
                         }
@@ -90,40 +90,40 @@ angular.module('agile.controllers')
                 };
             }
 
-            function drawBugsChart(bugsStats)
-            {
-                var ctx = document.getElementById("bugsChart").getContext("2d");
+            function drawBugsChart(bugsStats) {
+                setTimeout(function() {
+                    var ctx = document.getElementById("bugsChart").getContext("2d");
 
-                var labels = bugsStats.perBug.map(function(info) {
-                    return info.key;
-                });
-                var spent = bugsStats.perBug.map(function(info) {
-                    return info.spent / 60 / 60;
-                });
+                    var labels = bugsStats.perBug.map(function (info) {
+                        return info.key;
+                    });
+                    var spent = bugsStats.perBug.map(function (info) {
+                        return info.spent / 60 / 60;
+                    });
 
-                var data = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            fillColor: "#fff",
-                            strokeColor: "#fff",
-                            pointColor: "#f00",
-                            pointStrokeColor: "#f00",
-                            pointHighlightFill: "#f00",
-                            pointHighlightStroke: "rgba(151,187,205,1)",
-                            data: spent
-                        }
-                    ]
-                };
+                    var data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                fillColor: "#fff",
+                                strokeColor: "#fff",
+                                pointColor: "#f00",
+                                pointStrokeColor: "#f00",
+                                pointHighlightFill: "#f00",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: spent
+                            }
+                        ]
+                    };
 
-                var bugsChart = new Chart(ctx).Line(data, {
-                    responsive: true,
-                    pointDotRadius: 0.5,
-                    bezierCurve: false,
-                    datasetStroke: false,
-                    datasetStrokeWidth: 0,
-                    datasetFill: false
-                });
+                    var bugsChart = new Chart(ctx).Line(data, {
+                        responsive: true,
+                        pointDotRadius: 0.5,
+                        bezierCurve: false,
+                        datasetStroke: false,
+                        datasetStrokeWidth: 0,
+                        datasetFill: false
+                    });
+                }, 500);
             }
-
         }]);

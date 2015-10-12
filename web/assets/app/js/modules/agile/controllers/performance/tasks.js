@@ -25,14 +25,14 @@ angular.module('agile.controllers')
 
             function loadTasks()
             {
-                if (!$scope.user) {
+                if (!$scope.statsUser) {
                     throw {
                         message: "User is not loaded yet."
                     };
                 }
                 var jql = 'issuetype in (Task, Sub-task) AND status in (Resolved, Closed) ' +
                     ' AND created <= "' + dateFormatFilter('now', 'YYYY-MM-DD') + '"' + // this is to cache issues per day
-                    ' AND assignee = ' + $scope.user.key;
+                    ' AND assignee = ' + $scope.statsUser.key;
                 if ($scope.filters.project) {
                     jql += ' AND project = ' + $scope.filters.project.key;
                 }
@@ -64,7 +64,7 @@ angular.module('agile.controllers')
                     try {
                         for (var j = 0; j < tasks[i].fields.worklog.worklogs.length; j++) {
                             var worklog = tasks[i].fields.worklog.worklogs[j];
-                            if (worklog.author.name == $scope.user.key) {
+                            if (worklog.author.name == $scope.statsUser.key) {
                                 timespent += worklog.timeSpentSeconds;
                             }
                         }
@@ -94,46 +94,48 @@ angular.module('agile.controllers')
 
             function drawTasksChart(tasksStats)
             {
-                var ctx = document.getElementById("tasksChart").getContext("2d");
+                setTimeout(function() {
+                    var ctx = document.getElementById("tasksChart").getContext("2d");
 
-                var labels = tasksStats.perTask.map(function(info) {
-                    return info.key;
-                });
-                var estimated = tasksStats.perTask.map(function(info) {
-                    return info.estimated / 60 / 60;
-                });
-                var spent = tasksStats.perTask.map(function(info) {
-                    return info.spent / 60 / 60;
-                });
+                    var labels = tasksStats.perTask.map(function(info) {
+                        return info.key;
+                    });
+                    var estimated = tasksStats.perTask.map(function(info) {
+                        return info.estimated / 60 / 60;
+                    });
+                    var spent = tasksStats.perTask.map(function(info) {
+                        return info.spent / 60 / 60;
+                    });
 
-                var data = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: "Estimated",
-                            fillColor: "rgba(220,220,220,0.2)",
-                            strokeColor: "rgba(220,220,220,1)",
-                            pointColor: "rgba(220,220,220,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(220,220,220,1)",
-                            data: estimated
-                        },
-                        {
-                            label: "Spent",
-                            fillColor: "rgba(151,187,205,0.2)",
-                            strokeColor: "rgba(151,187,205,1)",
-                            pointColor: "rgba(151,187,205,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(151,187,205,1)",
-                            data: spent
-                        }
-                    ]
-                };
+                    var data = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: "Estimated",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: estimated
+                            },
+                            {
+                                label: "Spent",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: spent
+                            }
+                        ]
+                    };
 
-                var tasksChart = new Chart(ctx).Line(data, {
-                    showTooltips: true
-                });
+                    var tasksChart = new Chart(ctx).Line(data, {
+                        showTooltips: true
+                    });
+                }, 500);
             }
         }]);

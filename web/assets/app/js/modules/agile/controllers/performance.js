@@ -23,14 +23,14 @@ angular.module('agile.controllers')
             function loadUser() {
                 return Api.get('User').get($routeParams.user)
                     .then(function (user) {
-                        $scope.user = user;
+                        $scope.statsUser = user;
                     });
             }
 
             function loadProjects()
             {
                 return Api.get('Projects').get({
-                    user: $scope.user.key,
+                    user: $scope.statsUser.key,
                     _fields: 'key,name,avatar_urls'
                 }).then(function(projects) {
                     $scope.projects = projects;
