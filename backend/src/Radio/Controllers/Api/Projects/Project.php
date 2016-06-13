@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\ProjectRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,11 +19,7 @@ class Api_Projects_Project extends Core\Resource
      */
     public function showProjectInfo($projectKey)
     {
-        /** @var \MongoDB $jiraApi */
-        $db = $this->app->container['database'];
-        $project = $db->projects->findOne(array(
-            '_id' => $projectKey
-        ));
+        $project = ProjectRepository::load($projectKey);
 
         $response = new Core\JsonResponse();
         if ($project) {
@@ -48,9 +45,7 @@ class Api_Projects_Project extends Core\Resource
             unset($project['id']);
             unset($project['expansion']);
 
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-            $db->projects->save($project);
+            ProjectRepository::save($project);
 
             $response = new Core\JsonResponse(Response::OK, array(
                 'message' => 'Project has been saved.'

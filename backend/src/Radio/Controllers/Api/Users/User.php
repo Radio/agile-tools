@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\UserRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,12 +19,7 @@ class Api_Users_User extends Core\Resource
      */
     public function showUserInfo($userKey)
     {
-        /** @var \MongoDB $jiraApi */
-        $db = $this->app->container['database'];
-        $user = $db->users->findOne(array(
-            '_id' => $userKey
-        ));
-
+        $user = UserRepository::load($userKey);
         $response = new Core\JsonResponse();
         if ($user) {
             $response->code = Response::OK;

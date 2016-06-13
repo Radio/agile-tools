@@ -4,6 +4,8 @@ namespace Radio\Controllers;
 
 use Radio\Adapters;
 use Radio\Core;
+use Radio\Repositories\IssueRepository;
+use Radio\Repositories\ReviewRepository;
 use Tonic\Response;
 
 /**
@@ -97,10 +99,7 @@ class Api_Issues_Import extends Core\Resource
         $adapter = new Adapters\Jira_Issue($jiraIssue);
         $issue = $adapter->getAdaptation();
 
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
-        $db->issues->save($issue);
+        IssueRepository::save($issue);
 
         if ($issue['issuetype']['name'] == 'Sub-task') {
             $this->updateSubtasksData($issue);
@@ -148,10 +147,7 @@ class Api_Issues_Import extends Core\Resource
         $adapter = new Adapters\Crucible_Review($crucibleReview);
         $review = $adapter->getAdaptation();
 
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
-        $db->reviews->save($review);
+        ReviewRepository::save($review);
 
         $this->updateLinkedIssueData($review, $linkedIssue);
     }
@@ -181,10 +177,7 @@ class Api_Issues_Import extends Core\Resource
      */
     protected function updateSubtasksData($issue)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
-        $db->issues->update(
+        IssueRepository::getCollection()->updateMany(
             ['subtasks.key' => $issue['key']],
             ['$set' => [
                 'subtasks.$.assignee' => $issue['assignee'],
@@ -203,10 +196,7 @@ class Api_Issues_Import extends Core\Resource
      */
     protected function updateLinkedBugsData($issue)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
-        $db->issues->update(
+        IssueRepository::getCollection()->updateMany(
             ['links.key' => $issue['key']],
             ['$set' => [
                 'links.$.assignee' => $issue['assignee'],
@@ -224,17 +214,14 @@ class Api_Issues_Import extends Core\Resource
      */
     protected function updateLinkedIssueData($review, $linkedIssue)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
-        $db->issues->update(
+        IssueRepository::getCollection()->updateMany(
             ['key' => $linkedIssue['key']],
             ['$addToSet' => [
                 'reviews' => $review['key'],
             ]]
         );
 
-        $db->reviews->update(
+        ReviewRepository::getCollection()->updateMany(
             ['key' => $review['key']],
             ['$addToSet' => [
                 'linked_issues' => $linkedIssue['key'],

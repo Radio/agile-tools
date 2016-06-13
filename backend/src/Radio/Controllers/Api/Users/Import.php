@@ -4,6 +4,7 @@ namespace Radio\Controllers;
 
 use Radio\Adapters;
 use Radio\Core;
+use Radio\Repositories\UserRepository;
 use Tonic\Response;
 
 /**
@@ -28,10 +29,7 @@ class Api_Users_Import extends Core\Resource
             $adapter = new Adapters\Jira_User($jiraUser);
             $user = $adapter->getAdaptation();
 
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-
-            $db->users->save($user);
+            UserRepository::save($user);
 
             return new Core\JsonResponse(
                 Response::OK,

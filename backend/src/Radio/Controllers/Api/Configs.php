@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\ConfigRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -21,9 +22,7 @@ class Api_Configs extends Core\Resource
         $requestData = $this->request->getDecodedData();
 
         if (isset($requestData['config'])) {
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-            $db->config->save($requestData['config']);
+            ConfigRepository::save($requestData['config']);
 
             $response = new Core\JsonResponse(Response::OK, array(
                 'message' => 'Configuration has been created.'

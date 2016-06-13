@@ -4,6 +4,7 @@ namespace Radio\Controllers;
 
 use Radio\Adapters;
 use Radio\Core;
+use Radio\Repositories\ProjectRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -51,12 +52,7 @@ class Api_Projects_Import extends Core\Resource
      */
     protected function updateProject($project)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
-        $existingProject = $db->projects->findOne([
-            'key' => $project['key']
-        ]);
+        $existingProject = ProjectRepository::load($project['key'], 'key');
 
         if ($existingProject) {
             foreach ($project as $key => $value) {
@@ -66,6 +62,6 @@ class Api_Projects_Import extends Core\Resource
             $existingProject = $project;
         }
 
-        $db->projects->save($existingProject);
+        ProjectRepository::save($existingProject);
     }
 }

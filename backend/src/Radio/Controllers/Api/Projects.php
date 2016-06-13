@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\ProjectRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,11 +19,8 @@ class Api_Projects extends Core\Resource
      */
     public function listProjects()
     {
-        /** @var \MongoDB $jiraApi */
-        $db = $this->app->container['database'];
-
-        /** @var \MongoCursor $cursor */
-        $cursor = $this->applyFilters($db->projects);
+        /** @var \MongoDB\Driver\Cursor $cursor */
+        $cursor = $this->applyFilters(ProjectRepository::getCollection());
 
         $projects = iterator_to_array($cursor, false);
 
@@ -34,11 +32,11 @@ class Api_Projects extends Core\Resource
 
 
     /**
-     * @param \MongoCollection $projects
+     * @param \MongoDB\Collection $projects
      *
-     * @return \MongoCursor
+     * @return \MongoDB\Driver\Cursor
      */
-    protected function applyFilters(\MongoCollection $projects)
+    protected function applyFilters(\MongoDB\Collection $projects)
     {
         $filter = array();
         $projection = array();

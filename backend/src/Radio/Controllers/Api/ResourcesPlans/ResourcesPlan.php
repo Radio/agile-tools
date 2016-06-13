@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\ResourcePlanRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,12 +19,7 @@ class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
      */
     public function showResourcesPlanInfo($resourcesPlanKey)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-        $resourcesPlan = $db->resourcesPlans->findOne(array(
-            '_id' => $resourcesPlanKey
-        ));
-
+        $resourcesPlan = ResourcePlanRepository::load($resourcesPlanKey);
         if ($resourcesPlan) {
             return new Core\JsonResponse(Response::OK, $resourcesPlan);
         } else {
@@ -47,9 +43,7 @@ class Api_ResourcesPlans_ResourcesPlan extends Core\Resource
             unset($plan['id']);
             unset($plan['expansion']);
 
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-            $db->resourcesPlans->save($plan);
+            ResourcePlanRepository::save($plan);
 
             $response = new Core\JsonResponse(Response::OK, array(
                 'message' => 'Resources Plan has been saved.'

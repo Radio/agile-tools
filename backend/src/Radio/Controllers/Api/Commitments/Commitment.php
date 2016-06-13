@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\CommitmentRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,12 +19,7 @@ class Api_Commitments_Commitment extends Core\Resource
      */
     public function showCommitmentInfo($commitmentKey)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-        $commitment = $db->commitments->findOne(array(
-            '_id' => $commitmentKey
-        ));
-
+        $commitment = CommitmentRepository::load($commitmentKey);
         if ($commitment) {
             return new Core\JsonResponse(Response::OK, $commitment);
         } else {
@@ -47,9 +43,7 @@ class Api_Commitments_Commitment extends Core\Resource
             unset($plan['id']);
             unset($plan['expansion']);
 
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-            $db->commitments->save($plan);
+            CommitmentRepository::save($plan);
 
             $response = new Core\JsonResponse(Response::OK, array(
                 'message' => 'Commitment Plan has been saved.'

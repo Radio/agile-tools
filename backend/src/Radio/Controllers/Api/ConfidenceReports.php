@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\ConfidenceReportRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -21,12 +22,8 @@ class Api_ConfidenceReports extends Core\Resource
         $report = json_decode($this->request->data, true);
 
         if ($report) {
-
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-
             try {
-                $db->confidenceReports->insert($report);
+                ConfidenceReportRepository::save($report);
                 return new Core\JsonResponse(Response::OK, array(
                     'message' => 'Confidence Report has been added.'
                 ));

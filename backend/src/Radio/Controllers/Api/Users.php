@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\UserRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -22,10 +23,8 @@ class Api_Users extends Core\Resource
      */
     public function listUsers()
     {
-        /** @var \MongoDB $jiraApi */
-        $db = $this->app->container['database'];
-        /** @var \MongoCursor $cursor */
-        $cursor = $db->users->find();
+        /** @var \MongoDB\Driver\Cursor $cursor */
+        $cursor = UserRepository::getCollection()->find();
         $this->applySorting($cursor);
 
         $users = iterator_to_array($cursor, false);
@@ -36,7 +35,7 @@ class Api_Users extends Core\Resource
         );
     }
 
-    protected function applySorting(\MongoCursor $cursor)
+    protected function applySorting(\MongoDB\Driver\Cursor $cursor)
     {
         $sort = $this->request->query('sort');
         $fields = $sort ? explode(',', $sort) : array();

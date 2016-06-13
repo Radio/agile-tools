@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\IssueRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,12 +19,7 @@ class Api_Issues_Issue extends Core\Resource
      */
     public function showIssueInfo($issueKey)
     {
-        /** @var \MongoDB $jiraApi */
-        $db = $this->app->container['database'];
-        $issue = $db->issues->findOne(array(
-            '_id' => $issueKey
-        ));
-
+        $issue = IssueRepository::load($issueKey);
         $response = new Core\JsonResponse();
         if ($issue) {
             $response->code = Response::OK;

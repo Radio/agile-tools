@@ -3,6 +3,7 @@
 namespace Radio\Core;
 
 use Pimple\Container;
+use Radio\Repositories\ConfigRepository;
 
 class Config
 {
@@ -21,9 +22,7 @@ class Config
      */
     public function getGlobalConfig()
     {
-        /** @var \MongoDB $db */
-        $db = $this->container['database'];
-        $globalConfig = $db->config->findOne(array('_id' => 'global'));
+        $globalConfig = ConfigRepository::load('global');
         if (!$globalConfig) {
             $globalConfig = ['_id' => 'global'];
         }
@@ -40,13 +39,8 @@ class Config
      */
     public function getProjectConfig($projectKey)
     {
-        /** @var \MongoDB $db */
-        $db = $this->container['database'];
-
         $globalConfig = $this->getGlobalConfig();
-        $projectConfig = $db->config->findOne(array(
-            '_id' => $projectKey
-        ));
+        $projectConfig = ConfigRepository::load($projectKey);
         if (!$projectConfig) {
             $projectConfig = ['_id' => $projectKey];
         }

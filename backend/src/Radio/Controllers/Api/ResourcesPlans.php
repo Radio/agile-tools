@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\ResourcePlanRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -21,12 +22,8 @@ class Api_ResourcesPlans extends Core\Resource
         $plan = json_decode($this->request->data, true);
 
         if ($plan) {
-
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-
             try {
-                $db->resourcesPlans->insert($plan);
+                ResourcePlanRepository::save($plan);
                 return new Core\JsonResponse(Response::OK, array(
                     'message' => 'Resources Plan has been added.'
                 ));

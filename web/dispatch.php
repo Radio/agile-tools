@@ -33,6 +33,8 @@ $config = array(
 $app = new Application($config);
 $app->container = $container;
 
+\Radio\Core\AbstractRepository::setDatabase($container['database']);
+
 $request = new Request();
 
 try {

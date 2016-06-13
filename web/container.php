@@ -39,15 +39,15 @@ $container['config'] = function($container) {
 $container['mongo.client'] = function($container) {
     $config = $container['conf.db'];
 
-    return new MongoClient($config['server'], $config['options']);
+    return new MongoDB\Client($config['server'], $config['options']);
 };
 
 $container['mongo.db'] = function($container) {
     $config = $container['conf.db'];
-    /** @var MongoClient $client */
+    /** @var MongoDB\Client $client */
     $client = $container['mongo.client'];
 
-    return $client->selectDB($config['database']);
+    return $client->selectDatabase($config['database']);
 };
 
 $container['database'] = $container['mongo.db'];

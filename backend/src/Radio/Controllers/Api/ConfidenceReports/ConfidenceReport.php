@@ -3,6 +3,10 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\MongoDB\Helper;
+use Radio\Repositories\ConfidenceReportRepository;
+use Radio\Repositories\IssueRepository;
+use Radio\Repositories\ReviewRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -18,12 +22,7 @@ class Api_ConfidenceReports_ConfidenceReport extends Core\Resource
      */
     public function showConfidenceReportInfo($confidenceReportKey)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-        $confidenceReport = $db->confidenceReports->findOne(array(
-            '_id' => $confidenceReportKey
-        ));
-
+        $confidenceReport = ConfidenceReportRepository::load($confidenceReportKey);
         if ($confidenceReport) {
             $this->expandReport($confidenceReport);
 
@@ -54,10 +53,7 @@ class Api_ConfidenceReports_ConfidenceReport extends Core\Resource
 
             $this->updateIssuesCL($report);
 
-            /** @var \MongoDB $db */
-            $db = $this->app->container['database'];
-            $db->confidenceReports->save($report);
-
+            ConfidenceReportRepository::save($report);
             $response = new Core\JsonResponse(Response::OK, array(
                 'message' => 'Confidence Report has been saved.'
             ));
@@ -91,14 +87,11 @@ class Api_ConfidenceReports_ConfidenceReport extends Core\Resource
 
     protected function expandReportWithIssues(&$report)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
         $report['expansion']['issues'] = array();
 
         foreach ($report['issues'] as $issueInfo) {
             $issueKey = $issueInfo['key'];
-            $issue = $db->issues->findOne(array('_id' => $issueKey));
+            $issue = IssueRepository::load($issueKey);
             if ($issue) {
                 $report['expansion']['issues'][] = $issue;
             }
@@ -107,14 +100,13 @@ class Api_ConfidenceReports_ConfidenceReport extends Core\Resource
 
     protected function expandReportWithReviews(&$report)
     {
-        /** @var \MongoDB $db */
-        $db = $this->app->container['database'];
-
         $report['expansion']['reviews'] = array();
-
         foreach ($report['issues'] as $issueInfo) {
             $issueKey = $issueInfo['key'];
-            $reviews = $db->reviews->find(array('linked_issues' => $issueKey));
+            $reviews = Helper::bsonCollectionToArray(
+                ReviewRepository::getCollection()
+                    ->find(array('linked_issues' => $issueKey))
+            );
             if ($reviews) {
                 foreach ($reviews as $review) {
                     $skipReview = false;

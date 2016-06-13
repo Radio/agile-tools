@@ -3,6 +3,7 @@
 namespace Radio\Controllers;
 
 use Radio\Core;
+use Radio\Repositories\IssueRepository;
 use Tonic\Response;
 use chobie\Jira\Api;
 
@@ -23,10 +24,8 @@ class Api_Issues extends Core\Resource
      */
     public function listIssues()
     {
-        /** @var \MongoDB $jiraApi */
-        $db = $this->app->container['database'];
-        /** @var \MongoCursor $cursor */
-        $cursor = $this->applyFilters($db->issues);
+        /** @var \MongoDB\Driver\Cursor $cursor */
+        $cursor = $this->applyFilters(IssueRepository::getCollection());
 
         $issues = iterator_to_array($cursor, false);
 
@@ -37,11 +36,11 @@ class Api_Issues extends Core\Resource
     }
 
     /**
-     * @param \MongoCollection $issues
+     * @param \MongoDB\Collection $issues
      *
-     * @return \MongoCursor
+     * @return \MongoDB\Driver\Cursor
      */
-    protected function applyFilters(\MongoCollection $issues)
+    protected function applyFilters(\MongoDB\Collection $issues)
     {
         $filter = array();
         if ($this->request->query('project')) {
