@@ -1,6 +1,7 @@
 angular.module('agile.services')
     .factory('ConfidenceReportService', function(Api, JiraHelper) {
         return {
+            cr: null,
             load: function (reportKey, expandWith) {
                 expandWith = expandWith || ['issues'];
 
@@ -11,6 +12,7 @@ angular.module('agile.services')
                         }
                         injectExpansion(confidenceReport);
 
+                        this.cr = confidenceReport;
                         return confidenceReport;
                     });
             },
