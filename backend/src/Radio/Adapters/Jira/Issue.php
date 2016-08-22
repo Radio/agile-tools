@@ -19,6 +19,7 @@ class Jira_Issue extends Adapter
             'assignee',
             'components',
             'customfield_10150', // custom task type
+            'parent',
             'subtasks',
             'issuelinks',
             'fixVersions',
@@ -57,6 +58,10 @@ class Jira_Issue extends Adapter
             'status' => array(
                 'id' => $this->original['fields']['status']['id'],
                 'name' => $this->original['fields']['status']['name'],
+            ),
+            'parent' => array(
+                'id' => $this->original['fields']['parent']['id'],
+                'key' => $this->original['fields']['parent']['key'],
             ),
             'versions' => array(),
             'components' => array(),
