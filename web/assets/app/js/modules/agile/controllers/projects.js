@@ -3,8 +3,10 @@ angular.module('agile.controllers')
 
         Helper.setTitle('Projects');
 
+        Projects.disableCache();
         Projects.get()
             .then(function(projects) {
                 $scope.projects = projects;
             });
+        Projects.enableCache();
     });
