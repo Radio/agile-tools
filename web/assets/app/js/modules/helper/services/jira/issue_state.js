@@ -5,60 +5,72 @@ angular.module('helper')
             var getTaskType = TaskType.get;
             var getStatusCode = Status.get;
 
+            var taskTypesMap = {
+                'inv': 'impl',
+                'dev': 'impl'
+            };
+            function mapTaskType(taskType) {
+                return taskTypesMap[taskType] !== undefined ? taskTypesMap[taskType] : taskType;
+            }
+
+            function collectStats(issue) {
+                var activities = {};
+                var qaAssigned = 1;
+
+                for (var i = 0; i < issue.subtasks.length; i++) {
+                    var subTask = issue.subtasks[i];
+                    var taskType = getTaskType(subTask);
+                    var mappedType = mapTaskType(taskType);
+                    var statusCode = getStatusCode(subTask);
+
+                    activities[mappedType] = activities[mappedType] || {total: 0, open: 0, in_progress: 0, done: 0};
+
+                    activities[mappedType].total++;
+                    if (statusCode === Status.codes.in_progress) {
+                        activities[mappedType].in_progress++;
+                    }
+                    if (statusCode === Status.codes.open) {
+                        activities[mappedType].open++;
+                    }
+                    if (statusCode === Status.codes.done) {
+                        activities[mappedType].done++;
+                    }
+
+                    if (mappedType == 'qa') {
+                        if (subTask.assignee.key == 'chuck.norris') {
+                            qaAssigned = 0;
+                        }
+                    }
+                }
+                return {activities: activities, qaAssigned: qaAssigned};
+            }
+
             function defineComplexIssueState(issue, issueState)
             {
                 if (!issue.subtasks) {
                     return;
                 }
+                var __ret = collectStats(issue);
+                var activities = __ret.activities;
+                var qaAssigned = __ret.qaAssigned;
 
-                var devIssues = 0;
-                var devIssuesOpened = 0;
-                var devIssuesInProgress = 0;
-                var devIssuesResolved = 0;
-
-                for (var i = 0; i < issue.subtasks.length; i++) {
-                    var subTask = issue.subtasks[i];
-                    var taskType = getTaskType(subTask);
-                    switch (taskType) {
-                        case 'dev':
-                        case 'inv':
-                            if (subTask.status.name == 'In Progress') {
-                                devIssuesInProgress++;
+                for (var activity in activities) {
+                    if (activities.hasOwnProperty(activity)) {
+                        var activityInfo = activities[activity];
+                        if (activityInfo && activityInfo.total) {
+                            if (activityInfo.in_progress || (activityInfo.open && activityInfo.done)) {
+                                issueState[activity] = Status.codes.in_progress;
+                            } else if (!activityInfo.open && !activityInfo.in_progress && activityInfo.done) {
+                                issueState[activity] = Status.codes.done;
+                            } else {
+                                issueState[activity] = Status.codes.open;
                             }
-                            if (subTask.status.name == 'Open' || subTask.status.name == 'Reopened') {
-                                devIssuesOpened++;
-                            }
-                            if (subTask.status.name == 'Resolved') {
-                                devIssuesResolved++;
-                            }
-                            devIssues++;
-                            break;
-                        case 'cr':
-                        case 'doc':
-                        case 'tbd':
-                        case 'tc':
-                            issueState[taskType] = getStatusCode(subTask);
-                            break;
-                        case 'qa':
-                            issueState.qa = getStatusCode(subTask);
-                            if (subTask.assignee.key != 'chuck.norris') {
-                                issueState.qa_assigned = 1;
-                            }
-                            break;
+                        } else {
+                            issueState[activity] = Status.codes.na;
+                        }
                     }
                 }
-
-                if (devIssues) {
-                    if (devIssuesInProgress || (devIssuesOpened && devIssuesResolved)) {
-                        issueState.impl = 2;
-                    } else if (!devIssuesOpened && !devIssuesInProgress && devIssuesResolved) {
-                        issueState.impl = 1;
-                    } else {
-                        issueState.impl = 0;
-                    }
-                } else {
-                    issueState.impl = -1;
-                }
+                issueState.qa_assigned = qaAssigned;
 
                 aggregateIssueStatus(issueState);
             }
@@ -70,19 +82,10 @@ angular.module('helper')
                     return;
                 }
                 var taskType = getTaskType(issue);
-                switch (taskType) {
-                    case 'dev':
-                    case 'inv':
-                        issueState.impl = getStatusCode(issue);
-                        break;
-                    case 'cr':
-                    case 'doc':
-                    case 'tbd':
-                    case 'tc':
-                    case 'qa':
-                        issueState[taskType] = getStatusCode(issue);
-                        break;
-                }
+                var mappedType = mapTaskType(taskType);
+
+                issueState[mappedType] = getStatusCode(issue);
+                issueState.status = issue.status.name;
             }
 
             function aggregateIssueStatus(issueState) {
