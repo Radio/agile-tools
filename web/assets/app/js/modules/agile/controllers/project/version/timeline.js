@@ -7,12 +7,12 @@ angular.module('agile.controllers')
                 if ($scope.project && $scope.version) {
                     loadConfidenceReport()
                         .then(function(report) {
-                            var issues = [];
-                            report.issues.forEach(function(issueInfo) {
-                                issues.push(issueInfo.issue);
+                            var issues = report.issues.map(function(issueInfo) {
+                                return issueInfo.issue;
                             });
                             var timeline = TimelineService.group(issues, $scope.version);
                             console.log(timeline);
+                            $scope.timeline = timeline;
                         });
                 }
             });
@@ -23,8 +23,7 @@ angular.module('agile.controllers')
             }
 
 
-            function getEntityKey(project, version)
-            {
+            function getEntityKey(project, version) {
                 return project.key + '-' + version.jira_id;
             }
         });

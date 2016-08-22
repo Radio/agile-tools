@@ -1,0 +1,15 @@
+<div class="row timeline" data-ng-repeat="line in timeline">
+    <div class="col-sm-2">
+        {{line.assignee.name}}
+    </div>
+    <div class="col-sm-10">
+        <div class="timeline-story" data-ng-repeat="container in line.queue">
+            <span>{{ container.story.key }}</span>
+            <div class="tasks">
+                <div class="timeline-task" style="width:{{ getTaskWidth(task) }}px" data-ng-repeat="task in container.tasks">
+                    {{ task.key }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

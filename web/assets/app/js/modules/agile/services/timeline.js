@@ -2,29 +2,42 @@ angular.module('agile.services')
     .factory('TimelineService', function(JiraHelper_Status, JiraHelper_Version) {
         return {
             group: function(issues, version) {
-                var timeline = {};
-                issues.forEach(processIssue);
+                return issues.reduce(processIssue, {});
 
-                function processIssue(issue) {
+                function processIssue(timeline, issue) {
                     if (issue.subtasks && issue.subtasks.length) {
-                        issue.subtasks.forEach(processIssue);
+                        issue.subtasks.reduce(processIssue, timeline);
                     } else {
                         if (issueIsRelevant(issue, version)) {
+                            var containerKey = issue.parent.key || issue.key;
                             if (!timeline[issue.assignee.key]) {
-                                timeline[issue.assignee.key] = [];
+                                timeline[issue.assignee.key] = {
+                                    assignee: {
+                                        key: issue.assignee.key,
+                                        name: issue.assignee.name
+                                    },
+                                    queue: {}
+                                };
                             }
-                            timeline[issue.assignee.key].push(issue);
+                            if (!timeline[issue.assignee.key]['queue'][containerKey]) {
+                                timeline[issue.assignee.key]['queue'][containerKey] = {
+                                    story: {
+                                        key: containerKey
+                                    },
+                                    tasks: []
+                                };
+                            }
+                            timeline[issue.assignee.key]['queue'][containerKey]['tasks'].push(issue);
                         }
                     }
+                    return timeline;
                 }
-
-                return timeline;
             }
         };
 
         function issueIsRelevant(issue, version) {
             return JiraHelper_Version.isInVersion(issue, version) &&
-                issue.time.aggr.estimated;
+                (issue.time.aggr.estimated || issue.time.aggr.remaining);
         }
 
     });
