@@ -1,5 +1,5 @@
 angular.module('agile.filters')
-    .value('storyKeyRegexp', '([A-Z]+\-([A-Z]+\-)?[0-9]+([a-z])?)')
+    .value('storyKeyRegexp', '([A-Z]+\-?([A-Z]+\-)?[0-9]+([a-z])?)')
     .filter('storyKey', function($sce, storyKeyRegexp) {
         return function(input, noSummary) {
             input = input || '';
